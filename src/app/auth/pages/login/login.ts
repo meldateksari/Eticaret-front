@@ -46,6 +46,7 @@ export class Login {
           localStorage.setItem('token', res.token);
           this.authService.isLoggedInSubject.next(true);
           this.authService.userSubject.next(res.user);
+          localStorage.setItem('userId', res.user.id.toString())
           localStorage.setItem('user', JSON.stringify(res.user));
           this.messageService.add({
             severity: 'success',

@@ -8,9 +8,19 @@ import {Order} from '../models/order.model';
   providedIn: 'root'
 })
 export class OrderService {
-  private baseUrl = '/api/orders';
+  private baseUrl = 'http://localhost:8080/api/orders'; // Spring Boot backend URL
 
   constructor(private http: HttpClient) {}
 
+  getOrdersByUser(userId: number): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.baseUrl}/user/${userId}`);
+  }
 
+  getOrderById(orderId: number): Observable<Order> {
+    return this.http.get<Order>(`${this.baseUrl}/${orderId}`);
+  }
+
+  deleteOrder(orderId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${orderId}`);
+  }
 }

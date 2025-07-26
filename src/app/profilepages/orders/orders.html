@@ -5,108 +5,58 @@
 <body>
 <div class="relative flex size-full min-h-screen flex-col bg-[#fcf8f8] group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
   <div class="layout-container flex h-full grow flex-col">
-
     <div class="px-40 flex flex-1 justify-center py-5">
       <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-        <div class="flex flex-wrap justify-between gap-3 p-4"><p class="text-[#1b0e0f] tracking-light text-[32px] font-bold leading-tight min-w-72">My Orders</p></div>
+        <div class="flex flex-wrap justify-between gap-3 p-4">
+          <p class="text-[#1b0e0f] tracking-light text-[32px] font-bold leading-tight min-w-72">My Orders</p>
+        </div>
+
         <div class="px-4 py-3 @container">
           <div class="flex overflow-hidden rounded-xl border border-[#e7d0d1] bg-[#fcf8f8]">
             <table class="flex-1">
               <thead>
               <tr class="bg-[#fcf8f8]">
-                <th class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120 px-4 py-3 text-left text-[#1b0e0f] w-[400px] text-sm font-medium leading-normal">
-                  Order Number
-                </th>
-                <th class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240 px-4 py-3 text-left text-[#1b0e0f] w-[400px] text-sm font-medium leading-normal">Date</th>
-                <th class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360 px-4 py-3 text-left text-[#1b0e0f] w-[400px] text-sm font-medium leading-normal">Total</th>
-                <th class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480 px-4 py-3 text-left text-[#1b0e0f] w-60 text-sm font-medium leading-normal">Status</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Order #</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Date</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Total</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Payment</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Status</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Tracking</th>
               </tr>
               </thead>
               <tbody>
-              <tr class="border-t border-t-[#e7d0d1]">
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120 h-[72px] px-4 py-2 w-[400px] text-[#1b0e0f] text-sm font-normal leading-normal">#123456</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">
-                  2024-01-15
+              <tr *ngFor="let order of orders" class="border-t border-t-[#e7d0d1]">
+                <td class="px-4 py-2 text-sm text-[#1b0e0f] font-normal">#{{ order.id }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.orderDate | date:'mediumDate' }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">\${{ order.totalAmount.toFixed(2) }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.paymentStatus || 'N/A' }}</td>
+                <td class="px-4 py-2 text-sm font-normal">
+                    <span class="inline-block rounded-full px-3 py-1 text-sm bg-[#f3e7e8] text-[#1b0e0f] font-medium">
+                      {{ order.status }}
+                    </span>
                 </td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">$150.00</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#f3e7e8] text-[#1b0e0f] text-sm font-medium leading-normal w-full"
-                  >
-                    <span class="truncate">Shipped</span>
-                  </button>
-                </td>
-              </tr>
-              <tr class="border-t border-t-[#e7d0d1]">
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120 h-[72px] px-4 py-2 w-[400px] text-[#1b0e0f] text-sm font-normal leading-normal">#789012</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">
-                  2023-12-20
-                </td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">$75.50</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#f3e7e8] text-[#1b0e0f] text-sm font-medium leading-normal w-full"
-                  >
-                    <span class="truncate">Delivered</span>
-                  </button>
-                </td>
-              </tr>
-              <tr class="border-t border-t-[#e7d0d1]">
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120 h-[72px] px-4 py-2 w-[400px] text-[#1b0e0f] text-sm font-normal leading-normal">#345678</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">
-                  2023-11-05
-                </td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">$200.00</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#f3e7e8] text-[#1b0e0f] text-sm font-medium leading-normal w-full"
-                  >
-                    <span class="truncate">Cancelled</span>
-                  </button>
-                </td>
-              </tr>
-              <tr class="border-t border-t-[#e7d0d1]">
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120 h-[72px] px-4 py-2 w-[400px] text-[#1b0e0f] text-sm font-normal leading-normal">#901234</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">
-                  2023-10-10
-                </td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">$100.00</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#f3e7e8] text-[#1b0e0f] text-sm font-medium leading-normal w-full"
-                  >
-                    <span class="truncate">Returned</span>
-                  </button>
-                </td>
-              </tr>
-              <tr class="border-t border-t-[#e7d0d1]">
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120 h-[72px] px-4 py-2 w-[400px] text-[#1b0e0f] text-sm font-normal leading-normal">#567890</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">
-                  2023-09-25
-                </td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360 h-[72px] px-4 py-2 w-[400px] text-[#974e52] text-sm font-normal leading-normal">$50.00</td>
-                <td class="table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480 h-[72px] px-4 py-2 w-60 text-sm font-normal leading-normal">
-                  <button
-                    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-8 px-4 bg-[#f3e7e8] text-[#1b0e0f] text-sm font-medium leading-normal w-full"
-                  >
-                    <span class="truncate">Delivered</span>
-                  </button>
-                </td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.trackingNumber || '-' }}</td>
               </tr>
               </tbody>
             </table>
           </div>
-          <style>
-            @container(max-width:120px){.table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-120{display: none;}}
-            @container(max-width:240px){.table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-240{display: none;}}
-            @container(max-width:360px){.table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-360{display: none;}}
-            @container(max-width:480px){.table-b67fa4a9-239c-4a44-a7d8-ff4af8bc5f79-column-480{display: none;}}
-          </style>
         </div>
+
+        <!-- Order Items for each order -->
+        <div *ngFor="let order of orders" class="mt-4 border border-[#e7d0d1] rounded-xl bg-white p-4">
+          <p class="text-[#1b0e0f] text-lg font-semibold mb-2">Items for Order #{{ order.id }}</p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li *ngFor="let item of order.items">
+              {{ item.product.name }} - {{ item.quantity }} × \${{ item.priceAtPurchase.toFixed(2) }}
+            </li>
+          </ul>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
+
 </body>
 </html>
 

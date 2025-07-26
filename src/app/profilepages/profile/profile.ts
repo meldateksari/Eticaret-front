@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {Router, RouterLink, RouterLinkActive} from '@angular/router';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { FormGroup, Validators, ReactiveFormsModule, NonNullableFormBuilder } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../auth/service/auth.service';
@@ -9,51 +11,155 @@ import { User } from '../../models/user.model';
   selector: 'app-profile',
   templateUrl: './profile.html',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
-  providers: [AuthService],
+  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule],
 })
 export class Profile implements OnInit {
-  user!: User;
+  private readonly userService = inject(UserService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly formBuilder = inject(NonNullableFormBuilder);
 
-  constructor(
-    private userService: UserService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  user = signal<User | null>(null);
+  profileForm = signal<FormGroup | null>(null);
+  passwordForm = signal<FormGroup | null>(null);
+
+  isProfileFormValid = computed(() => this.profileForm()?.valid ?? false);
+  isPasswordFormValid = computed(() => this.passwordForm()?.valid ?? false);
+
+  // === GETTERLAR ===
+  get profileFormValue(): FormGroup | null {
+    return this.profileForm();
+  }
+
+  get passwordFormValue(): FormGroup | null {
+    return this.passwordForm();
+  }
+
+  get isProfileFormValidValue(): boolean {
+    return this.isProfileFormValid();
+  }
+
+  get isPasswordFormValidValue(): boolean {
+    return this.isPasswordFormValid();
+  }
 
   ngOnInit(): void {
     const storedUser = this.authService.getUser();
     if (storedUser?.id) {
-      this.user = storedUser;
+      this.user.set(storedUser);
+      this.initializeForms();
     } else {
       this.router.navigate(['/login']);
     }
   }
 
-  updateAccount(): void {
-    this.userService.updateUser(this.user.id, this.user).subscribe({
-      next: (updatedUser) => {
-        alert('Hesabınız güncellendi.');
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-        this.user = updatedUser;
-      },
-      error: () => {
-        alert('Güncelleme başarısız.');
-      }
+  private initializeForms(): void {
+    const currentUser = this.user();
+    if (!currentUser) return;
+
+    const profileFormGroup = this.formBuilder.group({
+      firstName: [currentUser.firstName || '', [Validators.required, Validators.minLength(2)]],
+      lastName: [currentUser.lastName || '', [Validators.required, Validators.minLength(2)]],
+      email: [currentUser.email || '', [Validators.required, Validators.email]],
+      phoneNumber: [currentUser.phoneNumber || '', [Validators.pattern(/^[0-9]{10,11}$/)]],
     });
+
+    const passwordFormGroup = this.formBuilder.group(
+      {
+        currentPassword: ['', [Validators.required]],
+        newPassword: ['', [Validators.required, Validators.minLength(6)]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: this.passwordMatchValidator }
+    );
+
+    this.profileForm.set(profileFormGroup);
+    this.passwordForm.set(passwordFormGroup);
   }
+
+  private passwordMatchValidator(group: FormGroup) {
+    const newPassword = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return newPassword === confirmPassword ? null : { mismatch: true };
+  }
+
+  updateAccount(): void {
+    const form = this.profileForm();
+    const currentUser = this.user();
+
+    if (form?.valid && currentUser) {
+      const updatedUserInfo = {
+        firstName: form.value.firstName,
+        lastName: form.value.lastName,
+        email: form.value.email,
+        phoneNumber: form.value.phoneNumber,
+      };
+
+      this.userService.updateUserInfo(currentUser.id, updatedUserInfo as User).subscribe({
+        next: (updatedUserFromServer) => {
+          alert('Hesabınız güncellendi.');
+          // Sunucudan gelen kullanıcı bilgisi en güncel halidir.
+          // Mevcut local user bilgisini sunucudan gelenle birleştirelim ki eksik alan kalmasın.
+          const finalUser = { ...currentUser, ...updatedUserFromServer };
+          localStorage.setItem('user', JSON.stringify(finalUser));
+          this.user.set(finalUser);
+        },
+        error: () => {
+          alert('Güncelleme başarısız.');
+        },
+      });
+    } else {
+      alert('Lütfen tüm gerekli alanları doğru şekilde doldurun.');
+    }
+  }
+
+  changePassword(): void {
+    const form = this.passwordForm();
+    const currentUser = this.user();
+
+    if (form?.valid && currentUser) {
+      const payload = {
+        newPassword: form.value.newPassword!,
+      };
+
+      this.userService.updateUserPassword(currentUser.id, payload).subscribe({
+        next: (updatedUser) => {
+          alert('Şifreniz güncellendi.');
+          const finalUser = { ...currentUser, ...updatedUser };
+          localStorage.setItem('user', JSON.stringify(finalUser));
+          this.user.set(finalUser);
+          form.reset();
+        },
+        error: (err) => {
+          const msg = err?.error?.message || 'Şifre güncelleme başarısız.';
+          alert(msg);
+        },
+      });
+    } else {
+      if (form?.hasError('mismatch')) {
+        alert('Yeni şifreler eşleşmiyor.');
+      } else {
+        alert('Lütfen tüm gerekli alanları doğru şekilde doldurun.');
+      }
+    }
+  }
+
+
+
 
   deleteAccount(): void {
     if (!confirm('Hesabınızı silmek istediğinize emin misiniz?')) return;
 
-    this.userService.deleteUser(this.user.id).subscribe({
+    const currentUser = this.user();
+    if (!currentUser) return;
 
+    this.userService.deleteUser(currentUser.id).subscribe({
       next: () => {
         alert('Hesap silindi.');
         this.authService.logout();
         this.router.navigate(['/']);
       },
-      error: () => alert('Hesap silinemedi.')
+      error: () => alert('Hesap silinemedi.'),
     });
   }
 }

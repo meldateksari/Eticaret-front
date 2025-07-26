@@ -7,8 +7,9 @@ import {Account} from './profilepages/account/account';
 import {Addresses} from './profilepages/addresses/addresses';
 import {Wishlist} from './profilepages/wishlist/wishlist';
 import {Returns} from './profilepages/returns/returns';
-import {Orders} from './profilepages/orders/orders';
+
 import {Settings} from './profilepages/settings/settings';
+import {Orders} from './profilepages/orders/orders';
 
 
 export const routes: Routes = [

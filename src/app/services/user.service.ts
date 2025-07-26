@@ -34,4 +34,14 @@ export class UserService {
   assignRoleToUser(userId: number, roleId: number): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/${userId}/roles/${roleId}`, {});
   }
+  updateUserInfo(id: number, user: User): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/${id}`, user);
+  }
+
+  updateUserPassword(id: number, payload: { newPassword: string }) {
+    return this.http.put<User>(`${this.apiUrl}/${id}/password`, payload );
+  }
+
+
+
 }

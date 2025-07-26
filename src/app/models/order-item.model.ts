@@ -1,6 +1,9 @@
 export interface OrderItem {
   id: number;
-  productName: string;
   quantity: number;
-  priceAtPurchase: number;
+  priceAtPurchase: number; // BigDecimal backend'den number olarak gelir
+  product: {
+    id: number;
+    name: string;
+  };
 }
