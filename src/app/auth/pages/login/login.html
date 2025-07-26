@@ -1,0 +1,33 @@
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="w-full max-w-md mx-auto p-4">
+  <div class="mb-4">
+    <label class="block text-sm font-medium text-gray-700">Email or Username</label>
+    <input
+      formControlName="email"
+      type="email"
+      class="mt-1 block w-full h-12 p-3 border border-gray-300 rounded-xl focus:border-pink-300"
+      placeholder="Enter your email or username"
+    />
+  </div>
+
+  <div class="mb-4">
+    <label class="block text-sm font-medium text-gray-700">Password</label>
+    <input
+      formControlName="password"
+      type="password"
+      class="mt-1 block w-full h-12 p-3 border border-gray-300 rounded-xl focus:border-pink-300"
+      placeholder="Enter your password"
+    />
+  </div>
+
+  <div class="mb-4">
+    <button
+      type="submit"
+      class="w-full h-10 bg-[#e8b4b7] text-[#191011] font-bold rounded-xl"
+      [disabled]="form.invalid"
+    >
+      Log in
+    </button>
+  </div>
+</form>
