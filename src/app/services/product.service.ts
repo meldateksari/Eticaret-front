@@ -1,42 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProductService {
-
-  private apiUrl = 'http://localhost:8080/api/products';
+  private baseUrl = 'http://localhost:8080/api/products';
 
   constructor(private http: HttpClient) {}
 
-  getAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}`);
+  getAll(): Observable<Product[]> {
+    return this.http.get<Product[]>(this.baseUrl);
   }
 
-  getActiveProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/active`);
+  getById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.baseUrl}/${id}`);
   }
 
-  getProductById(id: number): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  getActive(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/active`);
   }
 
-  getProductsByCategory(categoryId: number): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`);
+  getByCategory(categoryId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.baseUrl}/category/${categoryId}`);
   }
 
-  createProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(this.apiUrl, product);
+  create(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, product);
   }
 
-  updateProduct(id: number, product: Product): Observable<Product> {
-    return this.http.put<Product>(`${this.apiUrl}/${id}`, product);
+  update(id: number, product: Product): Observable<Product> {
+    return this.http.put<Product>(`${this.baseUrl}/${id}`, product);
   }
 
-  deleteProduct(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

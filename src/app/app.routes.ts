@@ -10,6 +10,8 @@ import {Returns} from './profilepages/returns/returns';
 
 import {Settings} from './profilepages/settings/settings';
 import {Orders} from './profilepages/orders/orders';
+import {ProductImage} from './pages/product-image/product-image';
+import {Women} from './pages/women/women';
 
 
 export const routes: Routes = [
@@ -22,7 +24,9 @@ export const routes: Routes = [
   { path: 'addresses', component: Addresses },
   { path: 'returns', component: Returns },
   { path: 'wishlist', component: Wishlist },
-  { path: 'settings', component: Settings}
+  { path: 'settings', component: Settings},
+  { path: 'product-image', component: ProductImage},
+  { path: 'women', component: Women}
 
 
 ];
