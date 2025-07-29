@@ -7,11 +7,10 @@ import {Account} from './profilepages/account/account';
 import {Addresses} from './profilepages/addresses/addresses';
 import {Wishlist} from './profilepages/wishlist/wishlist';
 import {Returns} from './profilepages/returns/returns';
-
 import {Settings} from './profilepages/settings/settings';
 import {Orders} from './profilepages/orders/orders';
 import {ProductImage} from './pages/product-image/product-image';
-import {Women} from './pages/women/women';
+import {Product} from './pages/product/product';
 
 
 export const routes: Routes = [
@@ -26,7 +25,7 @@ export const routes: Routes = [
   { path: 'wishlist', component: Wishlist },
   { path: 'settings', component: Settings},
   { path: 'product-image', component: ProductImage},
-  { path: 'women', component: Women}
+  { path: 'products', component: Product}
 
 
 ];

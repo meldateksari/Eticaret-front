@@ -114,20 +114,18 @@ export class Profile implements OnInit {
   }
 
   changePassword(): void {
-    const form = this.passwordForm();
-    const currentUser = this.user();
+    const form = this.passwordForm(); // formu senin tanımladığına göre çağırıyorsun
+    const currentUser = this.user(); // giriş yapmış kullanıcı bilgisi
 
     if (form?.valid && currentUser) {
       const payload = {
+        currentPassword: form.value.currentPassword!,
         newPassword: form.value.newPassword!,
       };
 
-      this.userService.updateUserPassword(currentUser.id, payload).subscribe({
-        next: (updatedUser) => {
-          alert('Şifreniz güncellendi.');
-          const finalUser = { ...currentUser, ...updatedUser };
-          localStorage.setItem('user', JSON.stringify(finalUser));
-          this.user.set(finalUser);
+      this.userService.updatePassword(currentUser.id, payload).subscribe({
+        next: () => {
+          alert('Şifreniz başarıyla güncellendi.');
           form.reset();
         },
         error: (err) => {
@@ -143,6 +141,7 @@ export class Profile implements OnInit {
       }
     }
   }
+
 
 
 

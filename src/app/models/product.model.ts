@@ -1,25 +1,21 @@
-import {ProductImage} from '../pages/product-image/product-image';
-
+// src/app/models/product.model.ts
+import { Category } from './category.model'; // Category modelinizi import edin
 
 export interface Product {
-  id?: number;
+  id: number;
   name: string;
   slug: string;
-  description?: string;
+  description: string;
   price: number;
   stockQuantity: number;
-  category: { id: number }; // sadece ID yollanacaksa
-  brand?: string;
-  imageUrl?: string;
-  weight?: number;
-  isActive?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-  images?: ProductImage[];
-  // aşağıdakiler backend’den geliyorsa eklenebilir
-  // reviews?: any[];
-  // cartItems?: any[];
-  // orderItems?: any[];
-  // interactions?: any[];
-  // productFeature?: any;
+  brand?: string | null;
+  imageUrl?: string | null;
+  weight?: number | null;
+  isActive: boolean;
+  createdAt?: string | null;
+  updatedAt?: string | null;
+
+  category: Category; // Ürünün ana kategorisi
+  genderCategories: Category[]; // Cinsiyet kategorileri listesi
+  images: string[]; // Ürün resim URL'lerinin listesi
 }

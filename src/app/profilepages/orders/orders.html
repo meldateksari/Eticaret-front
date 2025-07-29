@@ -1,19 +1,16 @@
-<html>
-<head>
-
-</head>
-<body>
 <div class="relative flex size-full min-h-screen flex-col bg-[#fcf8f8] group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
   <div class="layout-container flex h-full grow flex-col">
     <div class="px-40 flex flex-1 justify-center py-5">
       <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+
         <div class="flex flex-wrap justify-between gap-3 p-4">
           <p class="text-[#1b0e0f] tracking-light text-[32px] font-bold leading-tight min-w-72">My Orders</p>
         </div>
 
-        <div class="px-4 py-3 @container">
+        <!-- Orders Table -->
+        <div class="px-4 py-3 @container" *ngIf="orders.length > 0; else noOrders">
           <div class="flex overflow-hidden rounded-xl border border-[#e7d0d1] bg-[#fcf8f8]">
-            <table class="flex-1">
+            <table class="flex-1 w-full">
               <thead>
               <tr class="bg-[#fcf8f8]">
                 <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Order #</th>
@@ -27,13 +24,13 @@
               <tbody>
               <tr *ngFor="let order of orders" class="border-t border-t-[#e7d0d1]">
                 <td class="px-4 py-2 text-sm text-[#1b0e0f] font-normal">#{{ order.id }}</td>
-                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.orderDate | date:'mediumDate' }}</td>
-                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">\${{ order.totalAmount.toFixed(2) }}</td>
-                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.paymentStatus || 'N/A' }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.orderDate}}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">${{ order.totalAmount  }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.paymentStatus }}</td>
                 <td class="px-4 py-2 text-sm font-normal">
-                    <span class="inline-block rounded-full px-3 py-1 text-sm bg-[#f3e7e8] text-[#1b0e0f] font-medium">
-                      {{ order.status }}
-                    </span>
+                  <span class="inline-block rounded-full px-3 py-1 text-sm bg-[#f3e7e8] text-[#1b0e0f] font-medium">
+                    {{ order.status }}
+                  </span>
                 </td>
                 <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.trackingNumber || '-' }}</td>
               </tr>
@@ -47,16 +44,17 @@
           <p class="text-[#1b0e0f] text-lg font-semibold mb-2">Items for Order #{{ order.id }}</p>
           <ul class="list-disc pl-6 space-y-1">
             <li *ngFor="let item of order.items">
-              {{ item.product.name }} - {{ item.quantity }} × \${{ item.priceAtPurchase.toFixed(2) }}
+              {{ item.productName }} - {{ item.quantity }} × \${{ item.priceAtPurchase.toFixed(2) }}
             </li>
           </ul>
         </div>
+
+        <!-- No Orders -->
+        <ng-template #noOrders>
+          <p class="text-center text-[#1b0e0f] text-lg mt-10">You have no orders yet.</p>
+        </ng-template>
 
       </div>
     </div>
   </div>
 </div>
-
-</body>
-</html>
-

@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Product } from '../models/product.model';
-import { Observable } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Product} from '../models/product.model';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,10 +9,21 @@ import { Observable } from 'rxjs';
 export class ProductService {
   private baseUrl = 'http://localhost:8080/api/products';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
-  getAll(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.baseUrl);
+  getAll(genderIds?: number[], categoryId?: number | null, active?: boolean): Observable<Product[]> {
+    let params = new HttpParams();
+    if (genderIds && genderIds.length > 0) {
+      params = params.append('genderCategoryIds', genderIds.join(','));
+    }
+    if (categoryId !== undefined && categoryId !== null) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+    if (active) {
+      params = params.append('active', active.toString());
+    }
+    return this.http.get<Product[]>(this.baseUrl, {params});
   }
 
   getById(id: number): Observable<Product> {
@@ -38,4 +49,12 @@ export class ProductService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+  /** Çoklu kategori ID’si ile ürün getirir */
+  getByCategoryIds(categoryIds: number[], activeOnly?: boolean) {
+    let params = new HttpParams().set('categoryIds', categoryIds.join(','));
+    if (activeOnly) params = params.set('active', 'true');
+    return this.http.get<Product[]>(`${this.baseUrl}/products`, { params });
+  }
+
+
 }

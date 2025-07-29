@@ -4,7 +4,6 @@ import {provideHttpClient, withFetch} from '@angular/common/http';
 import {OrderService} from '../../services/order.service';
 import {Order} from '../../models/order.model';
 
-
 @Component({
   selector: 'app-orders',
   standalone: true,
@@ -18,15 +17,12 @@ export class Orders implements OnInit {
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
-    console.log('userId:', userId); // Bunu mutlaka görmelisin
-
     if (userId) {
       this.fetchOrders(Number(userId));
     } else {
       console.error('Kullanıcı ID\'si localStorage içinde bulunamadı.');
     }
   }
-
 
   fetchOrders(userId: number) {
     this.orderService.getOrdersByUser(userId).subscribe({
