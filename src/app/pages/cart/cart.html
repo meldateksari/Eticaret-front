@@ -1,7 +1,6 @@
-<h2 class="text-[32px] font-bold px-4 pb-4">Shopping Bag</h2>
+<h2 class="text-[32px] font-bold px-4 pb-4 text-black font-sans">Shopping Bag</h2>
 
-<!-- SEPET ÜRÜNLERİ -->
-<div *ngFor="let item of cartItems" class="flex items-center justify-between p-4 border-b bg-[#fcf8f8]">
+<div *ngFor="let item of cartItems" class="flex items-center justify-between p-4 border-b bg-white">
   <div class="flex items-center gap-4">
     <div
       *ngIf="item?.imageUrl"
@@ -10,59 +9,49 @@
     ></div>
 
     <div class="flex flex-col justify-center">
-      <p>{{ item.productName }}</p>
-      <p class="text-[#974e52] text-sm font-normal leading-normal">
-        Size {{ item?.size || '-' }}
-      </p>
+      <p class="font-medium text-black">{{ item.productName }}</p>
+      <p class="text-gray-500 text-sm">Size {{ item?.size || '-' }}</p>
     </div>
   </div>
 
   <div class="shrink-0 text-right">
-    <div class="text-[#1b0e0f] font-medium text-sm mb-1">
+    <div class="text-black font-semibold text-sm mb-1">
       ${{ (item.price * item.quantity) | number: '1.2-2' }}
     </div>
-    <div class="flex items-center gap-2 text-[#1b0e0f]">
+    <div class="flex items-center gap-2 text-black">
       <button
-        class="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f3e7e8]"
+        class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 font-semibold"
         (click)="decrease(item)"
-      >
-        -
-      </button>
+      >-</button>
       <span>{{ item.quantity }}</span>
       <button
-        class="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f3e7e8]"
+        class="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 font-semibold"
         (click)="increase(item)"
-      >
-        +
-      </button>
+      >+</button>
     </div>
   </div>
 </div>
-
-<!-- SİPARİŞ ÖZETİ -->
-<h3 class="text-[#1b0e0f] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Order Summary</h3>
+<h3 class="text-black text-lg font-bold px-4 pb-2 pt-4">Order Summary</h3>
 <div class="px-4">
-  <div class="flex justify-between gap-x-6 py-2">
-    <p class="text-[#974e52] text-sm font-normal leading-normal">Subtotal</p>
-    <p class="text-[#1b0e0f] text-sm font-normal leading-normal text-right">
-      ${{ totalPrice.toFixed(2) }}
-    </p>
+  <div class="flex justify-between py-2 text-sm text-gray-700">
+    <p>Subtotal</p>
+    <p>${{ totalPrice.toFixed(2) }}</p>
   </div>
-  <div class="flex justify-between gap-x-6 py-2">
-    <p class="text-[#974e52] text-sm font-normal leading-normal">Shipping</p>
-    <p class="text-[#1b0e0f] text-sm font-normal leading-normal text-right">Free</p>
+  <div class="flex justify-between py-2 text-sm text-gray-700">
+    <p>Shipping</p>
+    <p>Free</p>
   </div>
-  <div class="flex justify-between gap-x-6 py-2 font-bold">
-    <p class="text-[#974e52] text-sm">Total</p>
-    <p class="text-[#1b0e0f] text-sm text-right">${{ totalPrice.toFixed(2) }}</p>
+  <div class="flex justify-between py-2 text-sm font-bold text-black">
+    <p>Total</p>
+    <p>${{ totalPrice.toFixed(2) }}</p>
   </div>
 </div>
-
-<!-- CHECKOUT BUTONU -->
-<div class="flex px-4 py-3">
+<div class="flex justify-center px-4 py-6">
   <a
     [routerLink]="['/checkout']"
-    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 flex-1 bg-[#e82630] text-[#fcf8f8] text-base font-bold leading-normal tracking-[0.015em]">
+    class="w-full max-w-md h-12 flex items-center justify-center rounded-full bg-[#ef5a5a] text-white text-base font-bold tracking-wide transition hover:bg-[#e14b4b]"
+  >
     <span class="truncate">Checkout</span>
   </a>
 </div>
+

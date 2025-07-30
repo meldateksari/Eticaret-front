@@ -6,6 +6,7 @@ import { Product } from '../../models/product.model';
 import { CartItem } from '../../models/cart-item.model';
 import { Cart } from '../../models/cart.model'; // ✅ artık çakışmaz
 import { Observable } from 'rxjs';
+import {CartItemService} from '../../services/cart-items.service';
 
 @Component({
   selector: 'app-cart',
@@ -20,6 +21,7 @@ export class CartComponent implements OnInit {
 
   constructor(
     private cartService: CartService,
+    private cartItemService: CartItemService,
     private router: Router
   ) {}
 
@@ -58,9 +60,23 @@ export class CartComponent implements OnInit {
   }
 
   decrease(item: CartItem) {
-    if (item.quantity > 1) {
-      item.quantity--;
+    item.quantity--;
+
+    if (item.quantity === 0) {
+      this.cartItemService.removeItem(item.id).subscribe({
+        next: () => {
+          this.cartItems = this.cartItems.filter(ci => ci.id !== item.id);
+          this.calculateTotal();
+        },
+        error: () => {
+          alert('Ürün silinirken bir hata oluştu.');
+          item.quantity = 1; // Hata olursa geri al
+        }
+      });
+    } else {
       this.calculateTotal();
     }
   }
+
+
 }

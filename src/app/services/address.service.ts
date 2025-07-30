@@ -12,8 +12,14 @@ export class AddressService {
 
   constructor(private http: HttpClient) {}
 
-  // 📬 Adres oluştur
   createAddress(userId: number, address: Address): Observable<Address> {
     return this.http.post<Address>(`${this.apiUrl}/${userId}`, address);
   }
+  getAddressesByUserId(userId: number): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiUrl}/user/${userId}`);
+  }
+  updateAddress(id: number, address: Address): Observable<Address> {
+    return this.http.put<Address>(`${this.apiUrl}/${id}`, address);
+  }
+
 }

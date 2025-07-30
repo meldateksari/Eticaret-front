@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {CartComponent} from '../pages/cart/cart';
 import {Cart} from '../models/cart.model';
+import {CartItem} from '../models/cart-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,10 +29,6 @@ export class CartService {
     return this.http.get<Cart>(`${this.baseUrl}/user/${userId}`);
   }
 
-
-  getCartItems(cartId: number): Observable<{ product: Product, quantity: number }[]> {
-    return this.http.get<{ product: Product, quantity: number }[]>(`/api/cart/cart/${cartId}`);
-  }
 
 
 }

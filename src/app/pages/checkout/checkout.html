@@ -1,40 +1,94 @@
-<div class="p-8 max-w-xl mx-auto bg-white rounded-xl shadow-md">
-  <h2 class="text-2xl font-bold mb-4">1. Delivery Address</h2>
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg font-sans space-y-8">
 
-  <div class="space-y-4">
-    <input [(ngModel)]="address.addressLine1" placeholder="Address Line 1" />
-    <input [(ngModel)]="address.addressLine2" placeholder="Address Line 2" />
-    <input [(ngModel)]="address.city" placeholder="City" />
-    <input [(ngModel)]="address.state" placeholder="State" />
-    <input [(ngModel)]="address.zipCode" placeholder="Postal Code" />
-    <input [(ngModel)]="address.country" placeholder="Country" />
-    <label>
-      <input type="checkbox" [(ngModel)]="address.isDefault" />
-      Use as default
-    </label>
+  <!-- Delivery Address -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">1. Delivery Address</h2>
 
-    <button (click)="placeOrder()">Place Order</button>
+    <label class="block mb-2 text-sm text-gray-600">Select Address</label>
+    <select
+      [(ngModel)]="selectedAddress"
+      class="w-full border border-gray-300 rounded-md p-3 text-sm focus:ring-2 focus:ring-indigo-500"
+    >
+      <option *ngFor="let addr of address" [ngValue]="addr">
+        {{ addr.addressLine1 }}, {{ addr.city }}, {{ addr.state }} {{ addr.zipCode }}
+      </option>
+    </select>
 
+    <div *ngIf="selectedAddress" class="mt-4 text-sm text-gray-700 leading-6 bg-gray-50 p-4 rounded-md">
+      <p>{{ selectedAddress.addressLine1 }}</p>
+      <p *ngIf="selectedAddress.addressLine2">{{ selectedAddress.addressLine2 }}</p>
+      <p>{{ selectedAddress.city }}, {{ selectedAddress.state }} {{ selectedAddress.zipCode }}</p>
+      <p>{{ selectedAddress.country }}</p>
+    </div>
+  </section>
 
-    <h2 class="text-2xl font-bold mt-6 mb-4">2. Shipping Options</h2>
+  <!-- Shipping Options -->
+  <section>
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">2. Shipping Options</h2>
 
-  <div class="space-y-2">
-    <label class="flex items-center gap-2">
-      <input type="radio" name="shipping" value="standard" [(ngModel)]="shippingMethod" />
-      <span>Standard Shipping (5–7 days)</span>
-    </label>
-    <label class="flex items-center gap-2">
-      <input type="radio" name="shipping" value="express" [(ngModel)]="shippingMethod" />
-      <span>Express Shipping (2–3 days)</span>
-    </label>
+    <div class="space-y-3">
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input
+          type="radio"
+          name="shipping"
+          value="standard"
+          [(ngModel)]="shippingMethod"
+          class="accent-indigo-600"
+        />
+        <span class="text-gray-700 text-sm">Standard Shipping (5–7 business days)</span>
+      </label>
+      <label class="flex items-center gap-3 cursor-pointer">
+        <input
+          type="radio"
+          name="shipping"
+          value="express"
+          [(ngModel)]="shippingMethod"
+          class="accent-indigo-600"
+        />
+        <span class="text-gray-700 text-sm">Express Shipping (2–3 business days)</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- 3. Order Summary -->
+  <div *ngIf="isCartLoaded">
+    <div *ngIf="cartItems?.length > 0; else emptyCart" class="space-y-4">
+      <!-- Ürün listeleme -->
+      <div *ngFor="let item of cartItems" class="border rounded-md p-4 bg-gray-50 shadow-sm">
+        <div class="flex justify-between">
+          <div>
+            <p class="text-sm font-medium text-gray-800">{{ item.productName }}</p>
+            <p class="text-xs text-gray-600">Quantity: {{ item.quantity }}</p>
+            <p *ngIf="item.size" class="text-xs text-gray-600">Size: {{ item.size }}</p>
+          </div>
+          <div class="text-sm font-semibold text-gray-700">
+            ${{ item.price * item.quantity | number: '1.2-2' }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Toplam -->
+      <div class="text-right text-base font-bold text-gray-900 pt-4 border-t">
+        Total: ${{ totalAmount | number: '1.2-2' }}
+      </div>
+
+      <!-- Ödeme Butonu -->
+      <div class="flex justify-center mt-6">
+        <button
+          (click)="placeOrder()"
+          class="w-full md:w-auto px-6 py-3 bg-black text-white text-sm font-medium rounded-full hover:bg-gray-800 transition"
+        >
+          Continue to Payment
+        </button>
+      </div>
+    </div>
+
+    <!-- Sepet boşsa -->
+    <ng-template #emptyCart>
+      <p class="text-gray-500 text-sm">Your cart is empty.</p>
+    </ng-template>
   </div>
 
 
-  <h2 class="text-2xl font-bold mt-6 mb-4">4. Order Summary</h2>
 
-
-  <button (click)="placeOrder()" class="mt-6 w-full bg-red-600 text-white py-2 rounded-xl font-semibold">
-    Place Order
-  </button>
 </div>
-

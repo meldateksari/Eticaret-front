@@ -2,11 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../service/auth.service';
 import {CommonModule} from '@angular/common';
-import {Button} from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import {RouterLink} from '@angular/router';
-import {FloatLabel} from 'primeng/floatlabel';
-import {InputText} from 'primeng/inputtext';
 
 
 @Component({
@@ -15,7 +12,7 @@ import {InputText} from 'primeng/inputtext';
   standalone: true,
   templateUrl: './register.html',
   imports: [CommonModule,
-    ReactiveFormsModule, Button, RouterLink, FloatLabel, InputText
+    ReactiveFormsModule, RouterLink
   ],
   providers: [AuthService],
 })
