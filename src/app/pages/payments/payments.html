@@ -1,0 +1,95 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-[#fcf8f8] shadow rounded">
+  <h2 class="text-xl font-bold text-[#1b0e0f] mb-6">Mock Payment Form</h2>
+
+  <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
+    <!-- Card Number -->
+    <div class="mb-4">
+      <input
+        type="text"
+        maxlength="16"
+        formControlName="cardNumber"
+        placeholder="Card Number"
+        class="w-full border rounded px-3 h-12"
+        (input)="onCardInput($event)"
+      />
+      <small *ngIf="paymentForm.get('cardNumber')?.touched && paymentForm.get('cardNumber')?.invalid" class="text-red-600">
+        Must be 16 digits
+      </small>
+    </div>
+
+    <!-- Expiry Date -->
+    <div class="mb-4">
+      <input
+        type="text"
+        maxlength="5"
+        formControlName="expiryDate"
+        placeholder="MM/YY"
+        class="w-full border rounded px-3 h-12"
+        (input)="onExpiryInput($event)"
+      />
+      <small *ngIf="paymentForm.get('expiryDate')?.touched && paymentForm.get('expiryDate')?.invalid" class="text-red-600">
+        Format: MM/YY
+      </small>
+    </div>
+
+    <!-- CVV -->
+    <div class="mb-4">
+      <input
+        type="text"
+        maxlength="3"
+        formControlName="cvv"
+        placeholder="CVV"
+        class="w-full border rounded px-3 h-12"
+        (input)="onCvvInput($event)"
+      />
+      <small *ngIf="paymentForm.get('cvv')?.touched && paymentForm.get('cvv')?.invalid" class="text-red-600">
+        CVV must be 3 digits
+      </small>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="isLoading"
+      class="w-full bg-red-600 text-white py-2 rounded flex items-center justify-center gap-2"
+    >
+      <!-- Spinner göster -->
+      <svg
+        *ngIf="isLoading"
+        class="animate-spin h-5 w-5 text-white"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+        ></circle>
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v8z"
+        ></path>
+      </svg>
+
+      <!-- Metin -->
+      <span *ngIf="!isLoading && !showSuccess">Submit Payment</span>
+      <span *ngIf="isLoading">Processing...</span>
+      <span *ngIf="showSuccess">Success!</span>
+    </button>
+
+  </form>
+
+  <!-- Success message -->
+  <div *ngIf="showSuccess" class="text-green-600 font-bold text-center mt-4">
+    Payment Submitted (mock)!
+  </div>
+
+  <!-- Info -->
+  <p class="text-center text-sm text-[#974e52] mt-4">
+    This is a fake form. No data is saved or processed.
+  </p>
+</div>

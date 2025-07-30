@@ -1,0 +1,23 @@
+
+<div class="max-w-2xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">Siparişiniz Oluşturuldu</h2>
+
+  <div *ngIf="order">
+    <p><strong>Sipariş ID:</strong> {{ order.id }}</p>
+    <p><strong>Kullanıcı ID:</strong> {{ order.userId }}</p>
+    <p><strong>Tarih:</strong> {{ order.orderDate | date:'medium' }}</p>
+    <p><strong>Toplam Tutar:</strong> {{ order.totalAmount }} ₺</p>
+    <p><strong>Durum:</strong> {{ order.status }}</p>
+
+    <hr class="my-4" />
+
+    <h3 class="text-lg font-semibold mb-2">Ürünler:</h3>
+    <ul>
+      <li *ngFor="let item of order.orderItems" class="border-b py-2">
+        {{ item.productName }} - {{ item.quantity }} x {{ item.price }} ₺
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="!order" class="text-gray-500">Sipariş bulunamadı.</div>
+</div>

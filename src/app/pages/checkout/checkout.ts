@@ -8,12 +8,15 @@ import { AddressService } from '../../services/address.service';
 import { CartItemService } from '../../services/cart-items.service';
 import { CartService } from '../../services/cart.service';
 import { Cart } from '../../models/cart.model';
+import {Router, RouterModule} from '@angular/router';
+import {OrderService} from '../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule, HttpClientModule,RouterModule ],
   templateUrl: './checkout.html'
+
 })
 export class Checkout implements OnInit {
   userId!: number;
@@ -27,7 +30,9 @@ export class Checkout implements OnInit {
   constructor(
     private addressService: AddressService,
     private cartItemService: CartItemService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router,
+    private orderService: OrderService
   ) {}
 
   ngOnInit(): void {
@@ -89,16 +94,39 @@ export class Checkout implements OnInit {
       return;
     }
 
-    console.log('✅ Seçilen adres:', this.selectedAddress);
-    console.log('🚚 Kargo tipi:', this.shippingMethod);
+    // 🔁 CartItem'leri OrderItem formatına dönüştür
+    const orderItems = this.cartItems.map(item => ({
+      productId: item.productId,        // veya item.product.id
+      productName: item.productName,    // veya item.product.name
+      quantity: item.quantity,
+      price: item.price
+    }));
 
-    this.addressService.createAddress(this.userId, this.selectedAddress).subscribe({
+    // 🧾 Sipariş nesnesini hazırla
+    const orderRequest = {
+      userId: this.userId,
+      shippingAddressId: this.selectedAddress.id,
+      billingAddressId: this.selectedAddress.id, // varsa
+      totalAmount: this.totalAmount,
+      orderItems: orderItems
+    };
+
+    // 📡 Siparişi gönder
+    this.orderService.createOrder(orderRequest).subscribe({
       next: (response) => {
-        console.log('✅ Sipariş başarıyla işlendi:', response);
+        const orderId = response.id;
+
+        // Sipariş ID'yi localStorage'a kaydet (veya query param ile taşıyabilirsin)
+        localStorage.setItem('orderId', orderId.toString());
+
+        this.router.navigate(['/payments']); // Ödeme sayfasına git
       },
       error: (err) => {
-        console.error('❌ Sipariş sırasında hata oluştu:', err);
+        console.error('❌ Sipariş oluşturulamadı:', err);
       }
     });
+
   }
+
+
 }
