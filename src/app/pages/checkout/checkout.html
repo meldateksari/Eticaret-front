@@ -1,0 +1,40 @@
+<div class="p-8 max-w-xl mx-auto bg-white rounded-xl shadow-md">
+  <h2 class="text-2xl font-bold mb-4">1. Delivery Address</h2>
+
+  <div class="space-y-4">
+    <input [(ngModel)]="address.addressLine1" placeholder="Address Line 1" />
+    <input [(ngModel)]="address.addressLine2" placeholder="Address Line 2" />
+    <input [(ngModel)]="address.city" placeholder="City" />
+    <input [(ngModel)]="address.state" placeholder="State" />
+    <input [(ngModel)]="address.zipCode" placeholder="Postal Code" />
+    <input [(ngModel)]="address.country" placeholder="Country" />
+    <label>
+      <input type="checkbox" [(ngModel)]="address.isDefault" />
+      Use as default
+    </label>
+
+    <button (click)="placeOrder()">Place Order</button>
+
+
+    <h2 class="text-2xl font-bold mt-6 mb-4">2. Shipping Options</h2>
+
+  <div class="space-y-2">
+    <label class="flex items-center gap-2">
+      <input type="radio" name="shipping" value="standard" [(ngModel)]="shippingMethod" />
+      <span>Standard Shipping (5–7 days)</span>
+    </label>
+    <label class="flex items-center gap-2">
+      <input type="radio" name="shipping" value="express" [(ngModel)]="shippingMethod" />
+      <span>Express Shipping (2–3 days)</span>
+    </label>
+  </div>
+
+
+  <h2 class="text-2xl font-bold mt-6 mb-4">4. Order Summary</h2>
+
+
+  <button (click)="placeOrder()" class="mt-6 w-full bg-red-600 text-white py-2 rounded-xl font-semibold">
+    Place Order
+  </button>
+</div>
+

@@ -107,36 +107,18 @@
           </div>
         </div>
         <h2 class="text-[#191011] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Shop by Category</h2>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC368gWvAEmnH-Xmb355UI4FWBlGCvXJwaxnejbfeI7e-YF6LNR2JyPF1mTDU8tq7IjDXU-TZrQ-tsKCX_-uhcppjrmvE9H92j00rLVM9K63id9bWV44hGbfns4q_PsyJY1HBE9sFlw41jsu3rNiw-UgbajnN6UTyqJjzYmnBXCNlUFUVwkjlMBfbvVfmLLN2nr3_Ut9lSPvnUf8vUoC1CyXRp3CA4ztz7_H-VRwFwqykl0jy7SUxB0YHC4EOTowh6u4hLWQJsJPb4l");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Tops</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDwIrL-sbRkS4YL1e10FFsNYcD9oj0U5M9qqgU44lRXduzdT8gO2gjt1J5g-v0oUNO_0KcOma8n0drlQipd92qvzYtzCJmeGa-awpi_o6MR-iXhF7fhXcz6VLMuDoZjL2LkTGjsTB6vK2NjhKtTlaF7ui3WeyvxrcRfqUPKJsYNhivNMkOgkIQymoqi3VHyM8ziUT47ZGpDd0lT2Sr6WPmUO06aDTU4CgzxG0L2BVuoVTd9pRoNFztP2unJEBvl9TeRT-_AFMgsuCnI");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Bottoms</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCLeIiu5K5IGDAPNKJiW1_m5-vQle84FVqWORdH5i-Yyo5VI9obCVu7y_TUIdAq1jtcwpiIV-pAwRxYm4h3XyalMs6dq9CDJL0hxT_8F3Xmu3XFdwOpMfHgZszlX0DH6WqkyYKKh7wvN5KjHsNZdl4q1yRIPkwkh-iMcTuqYz3AQ7t-BO_rJip7KEFUL2RydvDlAe86eNTLXCftqWnTDOMrN36Co6l1UdRRls2N0JhCEoIsh90EQPf0N8RDKYCa2EplUopEL-oSel78");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Shoes</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAKGZJ5AEoxB_kmfKPw3wuMV5AytNeJ26CO0V8brFLxFKPJHBWCPBrGL8YrtF01yu9T5jTS67smIYwZUP46Y9qiv-dQm24p01hm4IsGnh4v7WATGjg8CMuyit0TCyOGKAiqEZWRItsi6O4XgoK5HFj-s2JQ0Gz20tUSWB5gY1V47gTdmWEWs-IjVAwxFeTKaVUJUJYEyM2raVps6-FUUeX6Iy1O8wlLi8ufCJHgCEa1_bQLVKZ5_8qIjS63ER8ITRnQa0hPRzeWqpFV");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Accessories</p>
-          </div>
-        </div>
+<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
+  <div *ngFor="let category of categories" class="flex flex-col gap-3 pb-3">
+    <a [routerLink]="['/products']" [queryParams]="{ categoryId: category.id }">
+      <div
+        class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
+        [style.background-image]="'url(' + (category.imageUrl || 'https://via.placeholder.com/158') + ')'"
+      ></div>
+      <p class="text-[#191011] text-base font-medium leading-normal">{{ category.name }}</p>
+    </a>
+  </div>
+</div>
+
       </div>
     </div>
   </div>

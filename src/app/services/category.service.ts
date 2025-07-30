@@ -17,5 +17,7 @@ export class CategoryService {
     return this.http.get<Category[]>(`${this.baseUrl}?type=gender`);
   }
 
-
+  getAllCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.baseUrl);
+  }
 }

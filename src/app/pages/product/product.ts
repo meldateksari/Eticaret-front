@@ -1,5 +1,5 @@
-// product.component.ts
 import {Component, OnInit} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Product as ProductModel} from '../../models/product.model';
 import {ProductService} from "../../services/product.service";
 import {CommonModule} from "@angular/common";
@@ -7,12 +7,14 @@ import {CategoryService} from '../../services/category.service';
 import {Category} from '../../models/category.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CartService} from "../../services/cart.service";
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-product',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   templateUrl: './product.html',
   styleUrl: './product.css'
@@ -22,7 +24,9 @@ export class Product implements OnInit {
   genderCategories: Category[] = [];
   allCategories: Category[] = [];
 
-  // Filtre değişkenleri - tek set kullanıyoruz
+  quantities: { [productId: number]: number } = {};
+
+
   selectedGenderIds: number[] = [];
   selectedCategoryId: number | null = null;
   activeOnly: boolean = false;
@@ -30,30 +34,36 @@ export class Product implements OnInit {
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
-    private cartService: CartService
+    private cartService: CartService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    console.log('Product component yüklendi. Ürünler başlangıçta boş.');
-    this.loadGenderCategories();
-    this.loadCategories();
+    this.route.queryParams.subscribe(params => {
+      const categoryId = params['categoryId'];
+      if (categoryId) {
+        this.selectedCategoryId = +categoryId;
+      }
+
+      this.loadGenderCategories();
+      this.loadCategories();
+      this.loadProducts();
+    });
   }
 
   loadProducts(): void {
-    if (this.selectedGenderIds.length === 0) {
-      this.products = [];
-      return;
-    }
-
     console.log('API\'den ürünler isteniyor. Filtreler:', {
       genderIds: this.selectedGenderIds,
       categoryId: this.selectedCategoryId,
       activeOnly: this.activeOnly
     });
 
+    const genderIds = this.selectedGenderIds.length > 0 ? this.selectedGenderIds : undefined;
+
     this.productService.getAll(
-      this.selectedGenderIds,
-      this.selectedCategoryId,
+      genderIds,
+      this.selectedCategoryId ?? undefined,
       this.activeOnly ? true : undefined
     ).subscribe({
       next: (data) => {
@@ -124,7 +134,23 @@ export class Product implements OnInit {
     this.loadProducts();
   }
 
-  addToCart(product: ProductModel): void {
-    this.cartService.addToCart(product);
+  addToCart(product: ProductModel) {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('Lütfen giriş yapın.');
+      return;
+    }
+
+    const productId = product.id;
+    const quantity = this.quantities[productId] || 1;
+
+    this.cartService.addProductToCart(+userId, productId, quantity).subscribe({
+      next: () => {
+        this.router.navigate(['/cart']);
+      },
+      error: (err) => {
+        console.error('Sepete ekleme hatası:', err);
+      }
+    });
   }
 }

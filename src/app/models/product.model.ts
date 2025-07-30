@@ -1,5 +1,5 @@
 // src/app/models/product.model.ts
-import { Category } from './category.model'; // Category modelinizi import edin
+import { Category } from './category.model';
 
 export interface Product {
   id: number;
@@ -9,13 +9,15 @@ export interface Product {
   price: number;
   stockQuantity: number;
   brand?: string | null;
-  imageUrl?: string | null;
+  imageUrl: string | null;
   weight?: number | null;
   isActive: boolean;
   createdAt?: string | null;
   updatedAt?: string | null;
+  size?: string;
 
-  category: Category; // Ürünün ana kategorisi
-  genderCategories: Category[]; // Cinsiyet kategorileri listesi
-  images: string[]; // Ürün resim URL'lerinin listesi
+
+  category: Category;
+  genderCategories: Category[];
+  images: string[];
 }

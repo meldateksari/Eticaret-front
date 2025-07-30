@@ -49,12 +49,6 @@ export class ProductService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
-  /** Çoklu kategori ID’si ile ürün getirir */
-  getByCategoryIds(categoryIds: number[], activeOnly?: boolean) {
-    let params = new HttpParams().set('categoryIds', categoryIds.join(','));
-    if (activeOnly) params = params.set('active', 'true');
-    return this.http.get<Product[]>(`${this.baseUrl}/products`, { params });
-  }
 
 
 }

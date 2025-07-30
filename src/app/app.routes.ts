@@ -11,6 +11,8 @@ import {Settings} from './profilepages/settings/settings';
 import {Orders} from './profilepages/orders/orders';
 import {ProductImage} from './pages/product-image/product-image';
 import {Product} from './pages/product/product';
+import {CartComponent} from './pages/cart/cart';
+import {Checkout} from './pages/checkout/checkout';
 
 
 export const routes: Routes = [
@@ -25,7 +27,8 @@ export const routes: Routes = [
   { path: 'wishlist', component: Wishlist },
   { path: 'settings', component: Settings},
   { path: 'product-image', component: ProductImage},
-  { path: 'products', component: Product}
-
+  { path: 'products', component: Product},
+  { path: 'cart', component: CartComponent},
+  { path: 'checkout', component: Checkout}
 
 ];

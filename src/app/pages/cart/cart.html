@@ -1,0 +1,68 @@
+<h2 class="text-[32px] font-bold px-4 pb-4">Shopping Bag</h2>
+
+<!-- SEPET ÜRÜNLERİ -->
+<div *ngFor="let item of cartItems" class="flex items-center justify-between p-4 border-b bg-[#fcf8f8]">
+  <div class="flex items-center gap-4">
+    <div
+      *ngIf="item?.imageUrl"
+      class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-14"
+      [ngStyle]="{ 'background-image': 'url(' + item.imageUrl + ')' }"
+    ></div>
+
+    <div class="flex flex-col justify-center">
+      <p>{{ item.productName }}</p>
+      <p class="text-[#974e52] text-sm font-normal leading-normal">
+        Size {{ item?.size || '-' }}
+      </p>
+    </div>
+  </div>
+
+  <div class="shrink-0 text-right">
+    <div class="text-[#1b0e0f] font-medium text-sm mb-1">
+      ${{ (item.price * item.quantity) | number: '1.2-2' }}
+    </div>
+    <div class="flex items-center gap-2 text-[#1b0e0f]">
+      <button
+        class="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f3e7e8]"
+        (click)="decrease(item)"
+      >
+        -
+      </button>
+      <span>{{ item.quantity }}</span>
+      <button
+        class="text-base font-medium leading-normal flex h-7 w-7 items-center justify-center rounded-full bg-[#f3e7e8]"
+        (click)="increase(item)"
+      >
+        +
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SİPARİŞ ÖZETİ -->
+<h3 class="text-[#1b0e0f] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Order Summary</h3>
+<div class="px-4">
+  <div class="flex justify-between gap-x-6 py-2">
+    <p class="text-[#974e52] text-sm font-normal leading-normal">Subtotal</p>
+    <p class="text-[#1b0e0f] text-sm font-normal leading-normal text-right">
+      ${{ totalPrice.toFixed(2) }}
+    </p>
+  </div>
+  <div class="flex justify-between gap-x-6 py-2">
+    <p class="text-[#974e52] text-sm font-normal leading-normal">Shipping</p>
+    <p class="text-[#1b0e0f] text-sm font-normal leading-normal text-right">Free</p>
+  </div>
+  <div class="flex justify-between gap-x-6 py-2 font-bold">
+    <p class="text-[#974e52] text-sm">Total</p>
+    <p class="text-[#1b0e0f] text-sm text-right">${{ totalPrice.toFixed(2) }}</p>
+  </div>
+</div>
+
+<!-- CHECKOUT BUTONU -->
+<div class="flex px-4 py-3">
+  <a
+    [routerLink]="['/checkout']"
+    class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 flex-1 bg-[#e82630] text-[#fcf8f8] text-base font-bold leading-normal tracking-[0.015em]">
+    <span class="truncate">Checkout</span>
+  </a>
+</div>
