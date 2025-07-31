@@ -1,0 +1,75 @@
+<div class="px-40 flex flex-1 justify-center py-5" *ngIf="product">
+  <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+    <!-- Breadcrumb -->
+    <div class="flex flex-wrap gap-2 p-4">
+      <a class="text-[#994d51] text-base font-medium" href="#">Home</a>
+      <span>/</span>
+      <a class="text-[#994d51] text-base font-medium" href="#">{{ product.category?.name || 'Kategori' }}</a>
+      <span>/</span>
+      <span class="text-[#1b0e0e] text-base font-medium">{{ product.name }}</span>
+    </div>
+
+    <!-- Product Images -->
+    <div class="flex w-full grow bg-[#fcf8f8] p-4">
+      <div class="w-full gap-1 bg-[#fcf8f8] aspect-[2/3] rounded-lg grid grid-cols-[1fr_1fr] grid-rows-[2fr_1fr_1fr]">
+        <div
+          class="col-span-2 bg-center bg-no-repeat bg-cover"
+          [style.background-image]="'url(' + product.imageUrl + ')'"
+        ></div>
+        <div
+          class="row-span-2 bg-center bg-no-repeat bg-cover"
+          [style.background-image]="'url(' + product.imageUrl + ')'"
+        ></div>
+        <div
+          class="bg-center bg-no-repeat bg-cover"
+          [style.background-image]="'url(' + product.imageUrl + ')'"
+        ></div>
+        <div
+          class="bg-center bg-no-repeat bg-cover"
+          [style.background-image]="'url(' + product.imageUrl + ')'"
+        ></div>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <h1 class="text-[#1b0e0e] text-[22px] font-bold px-4 pt-5">{{ product.name }}</h1>
+    <p class="text-[#994d51] text-sm px-4 pt-1">Ref: #{{ product.id }}</p>
+    <p class="text-[#1b0e0e] text-base px-4 pt-1">{{ product.description }}</p>
+    <p class="text-[#1b0e0e] text-xl font-bold px-4 pt-4">{{ product.price | currency:'TRY' }}</p>
+
+    <!-- Size Options (statik) -->
+    <h3 class="text-[#1b0e0e] text-lg font-bold px-4 pt-4">Size</h3>
+    <div class="flex flex-wrap gap-3 p-4">
+      <ng-container *ngFor="let size of ['XS','S','M','L','XL']">
+        <label class="size-label">
+          {{ size }}
+          <input type="radio" class="invisible absolute" name="size" />
+        </label>
+      </ng-container>
+    </div>
+
+    <!-- Color Options (statik örnek) -->
+    <h3 class="text-[#1b0e0e] text-lg font-bold px-4 pt-4">Color</h3>
+    <div class="flex flex-wrap gap-5 p-4">
+      <label class="color-circle" style="background-color: gold;">
+        <input type="radio" class="invisible" name="color" />
+      </label>
+      <label class="color-circle" style="background-color: blue;">
+        <input type="radio" class="invisible" name="color" />
+      </label>
+      <label class="color-circle" style="background-color: red;">
+        <input type="radio" class="invisible" name="color" />
+      </label>
+    </div>
+
+    <!-- Add to Bag -->
+    <div class="flex px-4 py-3">
+      <button class="add-to-bag">Sepete Ekle</button>
+    </div>
+
+  </div>
+</div>
+
+<app-recommended-products></app-recommended-products>
+
+

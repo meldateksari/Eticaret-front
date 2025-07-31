@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {Product as ProductModel} from '../../models/product.model';
 import {ProductService} from "../../services/product.service";
 import {CommonModule} from "@angular/common";
@@ -14,7 +14,8 @@ import {FormsModule} from '@angular/forms';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterLink
   ],
   templateUrl: './product.html',
   styleUrl: './product.css'

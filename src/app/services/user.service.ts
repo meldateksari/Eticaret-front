@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import {UpdatePasswordRequest} from '../models/update-password-request.model';
+import {Product} from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,9 @@ export class UserService {
     return this.http.put<void>(`${this.apiUrl}/${userId}/password`, dto);
   }
 
+  getRecommended(userId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/${userId}/recommended-products`);
+  }
 
 
 }

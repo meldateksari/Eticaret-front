@@ -47,15 +47,125 @@
     </div>
   </div>
 
-  <!-- Add New Address Button (Single and at Bottom) -->
   <div class="flex justify-start px-4 py-6">
     <button
+      (click)="toggleAddModal()"
       class="rounded-full h-10 px-5 bg-[#f3e7e8] text-[#1b0e0f] font-bold hover:bg-[#e9d5d6] transition"
-
     >
       Add New Address
     </button>
   </div>
+
+  <!-- Add Address Modal -->
+  <!-- Add Address Modal -->
+  <div
+    *ngIf="showAddModal"
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+  >
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+      <!-- Kapatma Butonu -->
+      <button
+        (click)="toggleAddModal()"
+        class="absolute top-2 right-2 text-gray-600 hover:text-black text-xl"
+      >
+        &times;
+      </button>
+
+      <h2 class="text-lg font-semibold mb-4">Add New Address</h2>
+
+      <form (ngSubmit)="addNewAddress()" #addressForm="ngForm">
+        <input
+          type="text"
+          name="addressLine1"
+          [(ngModel)]="newAddress.addressLine1"
+          placeholder="Address Line 1"
+          required
+          class="border p-2 mb-2 w-full"
+        />
+
+        <input
+          type="text"
+          name="addressLine2"
+          [(ngModel)]="newAddress.addressLine2"
+          placeholder="Address Line 2"
+          class="border p-2 mb-2 w-full"
+        />
+
+        <!-- Country Dropdown -->
+        <select
+          name="country"
+          [(ngModel)]="newAddress.country"
+          (change)="onCountrySelected()"
+          required
+          class="border p-2 mb-2 w-full"
+        >
+          <option value="" disabled selected>Select a country</option>
+          <option *ngFor="let country of countries" [value]="country.name">
+            {{ country.name }}
+          </option>
+        </select>
+
+        <!-- City Dropdown -->
+        <select
+          name="city"
+          [(ngModel)]="newAddress.city"
+          required
+          class="border p-2 mb-2 w-full"
+          [disabled]="!newAddress.country || isLoadingCities"
+        >
+          <option value="" disabled selected>
+            {{ isLoadingCities ? 'Loading cities...' :
+            !newAddress.country ? 'First select a country' : 'Select a city' }}
+          </option>
+          <option *ngFor="let city of cities" [value]="city">
+            {{ city }}
+          </option>
+        </select>
+        <!-- Loading indicator (isteğe bağlı) -->
+        <div *ngIf="isLoadingCities" class="text-sm text-gray-500 mb-2">
+          🔄 Loading cities...
+        </div>
+
+        <input
+          type="text"
+          name="state"
+          [(ngModel)]="newAddress.state"
+          placeholder="State"
+          required
+          class="border p-2 mb-2 w-full"
+        />
+
+        <input
+          type="text"
+          name="zipCode"
+          [(ngModel)]="newAddress.zipCode"
+          placeholder="Zip Code"
+          required
+          class="border p-2 mb-2 w-full"
+        />
+
+        <label class="flex items-center space-x-2 mb-4">
+          <input
+            type="checkbox"
+            name="isDefault"
+            [(ngModel)]="newAddress.isDefault"
+            class="h-4 w-4"
+          />
+          <span>Use as default address</span>
+        </label>
+
+        <button
+          type="submit"
+          class="rounded-full h-10 px-5 bg-[#cbe3c1] text-black font-bold hover:bg-[#b2d7a3] transition w-full"
+        >
+          Save Address
+        </button>
+      </form>
+    </div>
+  </div>
+
+
+
 
   <!-- Edit Modal -->
   <div *ngIf="editingAddress" class="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center">

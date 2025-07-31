@@ -15,6 +15,7 @@ import {CartComponent} from './pages/cart/cart';
 import {Checkout} from './pages/checkout/checkout';
 import {Payments} from './pages/payments/payments';
 import {NewOrder} from './pages/new-order/new-order';
+import {ProductDetail} from './pages/product-detail/product-detail';
 
 
 export const routes: Routes = [
@@ -33,6 +34,7 @@ export const routes: Routes = [
   { path: 'cart', component: CartComponent},
   { path: 'checkout', component: Checkout},
   { path: 'payments', component: Payments},
-  { path: 'new-order/:id', component: NewOrder}
+  { path: 'new-order/:id', component: NewOrder},
+  { path: 'product/:id', component: ProductDetail},
 
 ];
