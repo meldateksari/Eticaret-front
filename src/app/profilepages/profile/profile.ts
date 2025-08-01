@@ -12,12 +12,16 @@ import { User } from '../../models/user.model';
   templateUrl: './profile.html',
   standalone: true,
   imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule],
+  providers: [UserService]
 })
 export class Profile implements OnInit {
-  private readonly userService = inject(UserService);
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
-  private readonly formBuilder = inject(NonNullableFormBuilder);
+
+  constructor(private authService: AuthService,
+              private router: Router,
+              private userService: UserService,
+              private formBuilder: NonNullableFormBuilder
+  ) {
+  }
 
   user = signal<User | null>(null);
   profileForm = signal<FormGroup | null>(null);

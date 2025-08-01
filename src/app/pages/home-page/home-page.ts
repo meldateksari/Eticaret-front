@@ -9,7 +9,8 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './home-page.html',
-  styleUrls: ['./home-page.css']
+  styleUrls: ['./home-page.css'],
+  providers: [CategoryService]
 })
 export class HomePageComponent implements OnInit {
   categories: Category[] = [];

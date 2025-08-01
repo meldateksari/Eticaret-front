@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ProductImage } from '../models/product-image.model';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProductImageService {
   private baseUrl = 'http://localhost:8080/api/product-images';
 

@@ -18,6 +18,7 @@
   top: 0;
   height: 100vh;
   overflow-y: auto;
+  flex-shrink: 0;
 }
 
 .sidebar h3 {
@@ -101,26 +102,26 @@
   border-color: #000;
 }
 
-/* Content Area */
-.content {
+/* ÜÇLÜ KART DÜZENİ - ANA ALAN */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
   flex: 1;
   padding: 30px;
   background: #f8f8f8;
 }
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-}
-
 .product-card {
+  position: relative;
   background: #fff;
-  border-radius: 0;
+  border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
-  cursor: pointer;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
 }
 
 .product-card:hover {
@@ -128,10 +129,43 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
+/* Favori butonu */
+.favorite-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 2;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+}
+
+.favorite-icon:hover {
+  background-color: #f1e9ea;
+  transform: scale(1.1);
+}
+
+.favorite-icon svg {
+  width: 20px;
+  height: 20px;
+  color: #333;
+}
+
+.product-click-area {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .product-image-container {
   position: relative;
   width: 100%;
-  height: 320px;
+  height: 280px;
   overflow: hidden;
   background: #f5f5f5;
 }
@@ -149,31 +183,60 @@
 
 .product-info {
   padding: 20px;
+  /*flex: 1;*/
+  display: flex;
+  flex-direction: column;
 }
 
 .product-name {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   color: #000;
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
   line-height: 1.4;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 44px;
 }
 
 .product-price {
   font-size: 18px;
   font-weight: 600;
   color: #000;
-  margin-bottom: 15px;
+  margin: 0;
 }
 
-.product-actions {
-  padding: 0 20px 20px;
+/* Sepete ekleme alanı */
+.add-to-cart-section {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.quantity-input {
+  width: 60px;
+  padding: 8px;
+  border: 2px solid #e5e5e5;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: #000;
 }
 
 .add-to-cart-btn {
-  width: 100%;
+  flex: 1;
   background: #000;
   color: #fff;
   border: none;
@@ -184,8 +247,7 @@
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 0;
-  position: relative;
+  border-radius: 4px;
 }
 
 .add-to-cart-btn:hover:not(:disabled) {
@@ -202,9 +264,11 @@
   cursor: not-allowed;
 }
 
+/* Ürün bulunamadı mesajı */
 .no-products-message {
+  grid-column: 1 / -1;
   text-align: center;
-  padding: 60px 20px;
+  padding: 80px 20px;
   color: #666;
   font-size: 16px;
 }
@@ -214,8 +278,10 @@
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  margin: 0;
 }
 
+/* Loading animasyonu */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -240,6 +306,22 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    padding: 25px;
+  }
+
+  .product-card {
+    min-height: 120px;
+  }
+
+  .product-image-container {
+    height: 250px;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -251,37 +333,70 @@
     position: static;
     border-right: none;
     border-bottom: 1px solid #e5e5e5;
-  }
-
-  .content {
     padding: 20px;
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
     gap: 20px;
+    padding: 20px;
+  }
+
+  .product-card {
+    min-height: 380px;
   }
 
   .product-image-container {
-    height: 280px;
+    height: 220px;
+  }
+
+  .product-info {
+    padding: 15px;
+  }
+
+  .add-to-cart-section {
+    padding: 15px;
   }
 }
 
 @media (max-width: 480px) {
-  .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-  }
-
   .sidebar {
-    padding: 20px 15px;
-  }
-
-  .content {
     padding: 15px;
   }
 
+  .product-grid {
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .product-card {
+    min-height: 350px;
+  }
+
   .product-image-container {
-    height: 250px;
+    height: 200px;
+  }
+
+  .product-name {
+    font-size: 14px;
+    min-height: 38px;
+  }
+
+  .product-price {
+    font-size: 16px;
+  }
+
+  .add-to-cart-section {
+    gap: 8px;
+  }
+
+  .quantity-input {
+    width: 50px;
+    padding: 6px;
+  }
+
+  .add-to-cart-btn {
+    padding: 10px 16px;
+    font-size: 12px;
   }
 }

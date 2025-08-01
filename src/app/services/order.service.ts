@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import {Order} from '../models/order.model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class OrderService {
   private baseUrl = 'http://localhost:8080/api/orders'; // Spring Boot backend URL
 
@@ -26,5 +24,9 @@ export class OrderService {
 
   deleteOrder(orderId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${orderId}`);
+  }
+
+  updateOrder(orderId: number, status: any) {
+    return this.http.post<Order>(`${this.baseUrl}/updatePayment/${orderId}/${status}`, {});
   }
 }

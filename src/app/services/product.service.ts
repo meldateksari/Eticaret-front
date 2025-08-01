@@ -3,9 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {Product} from '../models/product.model';
 import {Observable} from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ProductService {
   private baseUrl = 'http://localhost:8080/api/products';
 
@@ -26,9 +24,11 @@ export class ProductService {
     return this.http.get<Product[]>(this.baseUrl, {params});
   }
 
-  getProduct(productId: number): Observable<Product> {
-    return this.http.get<Product>(`${this.baseUrl}/${productId}`);
+  getProductById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
+
+
 
 
 

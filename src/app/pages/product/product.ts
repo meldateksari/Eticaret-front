@@ -8,6 +8,8 @@ import {Category} from '../../models/category.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CartService} from "../../services/cart.service";
 import {FormsModule} from '@angular/forms';
+import {Wishlist} from '../wishlist-page/wishlist-page';
+import {WishlistService} from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-product',
@@ -18,7 +20,8 @@ import {FormsModule} from '@angular/forms';
     RouterLink
   ],
   templateUrl: './product.html',
-  styleUrl: './product.css'
+  styleUrl: './product.css',
+  providers: [ProductService, CategoryService, WishlistService, CartService]
 })
 export class Product implements OnInit {
   products: ProductModel[] = [];
@@ -35,6 +38,7 @@ export class Product implements OnInit {
   constructor(
     private productService: ProductService,
     private categoryService: CategoryService,
+    private wishlistService: WishlistService,
     private cartService: CartService,
     private router: Router,
     private route: ActivatedRoute
@@ -154,4 +158,27 @@ export class Product implements OnInit {
       }
     });
   }
+  addProductToWishlist(product: ProductModel): void {
+    const userId = Number(localStorage.getItem('userId'));
+
+    if (!userId) {
+      console.error('Kullanıcı ID bulunamadı.');
+      return;
+    }
+
+    const request = {
+      userId: userId,
+      productId: product.id
+    };
+
+    this.wishlistService.addProductToWishlist(request).subscribe({
+      next: () => {
+        console.log('Ürün istek listesine eklendi:', product.name);
+      },
+      error: (err) => {
+        console.error('İstek listesine eklenirken hata:', err);
+      }
+    });
+  }
+
 }

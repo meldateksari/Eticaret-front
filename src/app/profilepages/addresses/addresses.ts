@@ -15,7 +15,8 @@ interface Country {
   templateUrl: './addresses.html',
   styleUrls: ['./addresses.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule],
+  providers: [LocationService, AddressService]
 })
 export class Addresses implements OnInit {
   addresses: Address[] = [];

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { CartItem } from '../../models/cart-item.model';
 import { Address } from '../../models/address.model';
 import { AddressService } from '../../services/address.service';
@@ -14,8 +13,9 @@ import {OrderService} from '../../services/order.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule,RouterModule ],
-  templateUrl: './checkout.html'
+  imports: [CommonModule, FormsModule, RouterModule ],
+  templateUrl: './checkout.html',
+  providers: [CartService, CartItemService, AddressService, OrderService],
 
 })
 export class Checkout implements OnInit {

@@ -9,10 +9,14 @@ import {Order} from '../../models/order.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './orders.html',
-  styleUrls: ['./orders.css']
+  styleUrls: ['./orders.css'],
+  providers: [OrderService]
 })
 export class Orders implements OnInit {
-  private orderService = inject(OrderService);
+
+  constructor(private orderService: OrderService) {
+  }
+
   orders: Order[] = [];
 
   ngOnInit(): void {

@@ -4,9 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Address } from '../models/address.model';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AddressService {
   private apiUrl = 'http://localhost:8080/api/addresses'; // URL'yi backend adresine göre ayarla
 

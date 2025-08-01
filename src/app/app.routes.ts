@@ -5,7 +5,7 @@ import {Login} from './auth/pages/login/login';
 import {Profile} from './profilepages/profile/profile';
 import {Account} from './profilepages/account/account';
 import {Addresses} from './profilepages/addresses/addresses';
-import {Wishlist} from './profilepages/wishlist/wishlist';
+
 import {Returns} from './profilepages/returns/returns';
 import {Settings} from './profilepages/settings/settings';
 import {Orders} from './profilepages/orders/orders';
@@ -16,6 +16,8 @@ import {Checkout} from './pages/checkout/checkout';
 import {Payments} from './pages/payments/payments';
 import {NewOrder} from './pages/new-order/new-order';
 import {ProductDetail} from './pages/product-detail/product-detail';
+import {Wishlist} from './pages/wishlist-page/wishlist-page';
+
 
 
 export const routes: Routes = [
@@ -36,5 +38,6 @@ export const routes: Routes = [
   { path: 'payments', component: Payments},
   { path: 'new-order/:id', component: NewOrder},
   { path: 'product/:id', component: ProductDetail},
+
 
 ];

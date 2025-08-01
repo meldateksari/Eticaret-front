@@ -10,7 +10,8 @@ import {UserService} from '../../services/user.service';
   selector: 'app-recommended-products',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './recommended-products.html'
+  templateUrl: './recommended-products.html',
+  providers: [UserService]
 })
 export class RecommendedProducts implements OnInit {
   userId: number | null = null; // Başlangıçta null tanımla

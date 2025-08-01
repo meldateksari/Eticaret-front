@@ -9,31 +9,20 @@ import { ActivatedRoute } from '@angular/router';
   standalone: true,
   imports: [DatePipe, CommonModule],
   templateUrl: './new-order.html',
-  styleUrls: ['./new-order.css']
+  styleUrls: ['./new-order.css'],
+  providers: [OrderService]
 })
 export class NewOrder implements OnInit {
   order: any;
 
   constructor(
-    private orderService: OrderService
+    private orderService: OrderService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    const userId = Number(localStorage.getItem('userId'));
+    const orderId = this.route.snapshot.paramMap.get('id');
+    console.log(orderId);
 
-    if (!userId) {
-      console.error('Kullanıcı ID localStorage\'da bulunamadı.');
-      return;
-    }
-
-    this.orderService.createOrder({ userId }).subscribe({
-      next: (res) => {
-        console.log('Sipariş oluşturuldu:', res);
-        this.order = res;
-      },
-      error: (err) => {
-        console.error('Sipariş oluşturulamadı:', err);
-      }
-    });
   }
 }

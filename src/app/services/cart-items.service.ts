@@ -4,9 +4,7 @@ import { Observable } from 'rxjs';
 import {CartItem} from '../models/cart-item.model';
 
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CartItemService {
   private baseUrl = 'http://localhost:8080/api/cart-items'; // Spring backend URL
   constructor(private http: HttpClient) {}

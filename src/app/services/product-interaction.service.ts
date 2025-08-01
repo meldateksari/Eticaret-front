@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ProductInteractionService {
   private interactionUrl = 'http://localhost:8080/api/interactions';
 

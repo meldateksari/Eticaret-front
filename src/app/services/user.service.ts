@@ -5,9 +5,7 @@ import { User } from '../models/user.model';
 import {UpdatePasswordRequest} from '../models/update-password-request.model';
 import {Product} from '../models/product.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class UserService {
   private apiUrl = 'http://localhost:8080/api/users';
 

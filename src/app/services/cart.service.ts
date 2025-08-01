@@ -7,9 +7,7 @@ import {CartComponent} from '../pages/cart/cart';
 import {Cart} from '../models/cart.model';
 import {CartItem} from '../models/cart-item.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CartService {
 
   private baseUrl = 'http://localhost:8080/api/carts'; // Spring backend URL

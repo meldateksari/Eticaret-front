@@ -2,13 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
+import {OrderService} from '../../services/order.service';
+import {lastValueFrom} from 'rxjs';
 
 @Component({
   standalone: true,
   selector: 'app-payment-page',
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './payments.html',
-  styleUrls: ['./payments.css']
+  styleUrls: ['./payments.css'],
+  providers: [OrderService]
 })
 export class Payments implements OnInit {
   isLoading = false;
@@ -24,7 +27,8 @@ export class Payments implements OnInit {
     }
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private orderService: OrderService) {}
   paymentForm = new FormGroup({
     cardNumber: new FormControl('', [
       Validators.required,
@@ -49,11 +53,11 @@ export class Payments implements OnInit {
 
     this.isLoading = true;
 
-    setTimeout(() => {
+    setTimeout(async () => {
+      await this.updatePayment();
       this.isLoading = false;
       this.showSuccess = true;
       this.paymentForm.reset();
-
       setTimeout(() => {
         this.router.navigate(['/new-order', this.orderId]);
       }, 1000);
@@ -73,5 +77,9 @@ export class Payments implements OnInit {
   onCvvInput(event: any): void {
     const value = event.target.value.replace(/\D/g, '');
     this.paymentForm.get('cvv')?.setValue(value);
+  }
+
+  async updatePayment() {
+    const order = await lastValueFrom(this.orderService.updateOrder(this.orderId, "PAID"));
   }
 }

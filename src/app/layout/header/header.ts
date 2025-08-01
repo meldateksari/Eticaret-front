@@ -35,5 +35,12 @@ export class Header implements OnInit {
     this.authService.logout();     // Burada parametre VERME
     this.router.navigate(['/login']); // veya yönlendirme
   }
+  goToWishlist() {
+    this.router.navigate(['/wishlist']);
+  }
+  goToCart() {
+    this.router.navigate(['/cart']);
+  }
+
 
 }

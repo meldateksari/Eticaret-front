@@ -13,7 +13,8 @@ import {CartItemService} from '../../services/cart-items.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './cart.html',
-  styleUrls: ['./cart.css']
+  styleUrls: ['./cart.css'],
+  providers: [CartService, CartItemService]
 })
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
