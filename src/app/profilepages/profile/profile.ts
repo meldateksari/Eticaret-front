@@ -7,11 +7,14 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../auth/service/auth.service';
 import { User } from '../../models/user.model';
 
+import {HttpClient} from '@angular/common/http';
+import {FileUpload, FileUploadModule} from 'primeng/fileupload';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.html',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule, FileUploadModule,FileUpload],
   providers: [UserService]
 })
 export class Profile implements OnInit {
@@ -19,9 +22,11 @@ export class Profile implements OnInit {
   constructor(private authService: AuthService,
               private router: Router,
               private userService: UserService,
-              private formBuilder: NonNullableFormBuilder
+              private formBuilder: NonNullableFormBuilder,
+              private http: HttpClient
   ) {
   }
+  imageUrl: string | null = null;
 
   user = signal<User | null>(null);
   profileForm = signal<FormGroup | null>(null);
@@ -146,10 +151,6 @@ export class Profile implements OnInit {
     }
   }
 
-
-
-
-
   deleteAccount(): void {
     if (!confirm('Hesabınızı silmek istediğinize emin misiniz?')) return;
 
@@ -165,4 +166,30 @@ export class Profile implements OnInit {
       error: () => alert('Hesap silinemedi.'),
     });
   }
+  uploadProfileImage(event: any) {
+    const file: File = event.files[0];
+    if (!file) return;
+
+    this.userService.uploadProfileImage(file).subscribe({
+      next: (res) => {
+        this.imageUrl = res.imageUrl;
+
+        const currentUser = this.user();
+        if (currentUser) {
+          const updatedUser = { ...currentUser, profileImageUrl: res.imageUrl };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          this.user.set(updatedUser);
+        }
+
+        alert("Profil fotoğrafı yüklendi.");
+      },
+      error: (err) => {
+        console.error('Yükleme hatası:', err);
+        alert("Yükleme başarısız oldu.");
+      }
+    });
+  }
+
+
+
 }

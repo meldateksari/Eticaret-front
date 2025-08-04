@@ -2,12 +2,15 @@ export interface Order {
   id: number;
   orderDate: string;
   totalAmount: number;
-  paymentStatus: string;
   status: string;
-  trackingNumber: string;
-  items: {
+  userId: number;
+  shippingAddressId: number;
+  billingAddressId: number;
+  orderItems: {
+    id: number;
+    productId: number;
     productName: string;
     quantity: number;
-    priceAtPurchase: number;
+    price: number;
   }[];
 }

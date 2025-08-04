@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { ProductService } from '../../services/product.service';
 import { WishlistDto, WishlistItemDto } from '../../models/wishlist.model';
 import { Product } from '../../models/product.model';
+import {CartService} from '../../services/cart.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-wishlist-page',
@@ -12,7 +15,7 @@ import { Product } from '../../models/product.model';
   imports: [CommonModule],
   templateUrl: './wishlist-page.html',
   styleUrls: ['./wishlist-page.css'],
-  providers: [WishlistService, ProductService]
+  providers: [WishlistService, ProductService,CartService]
 })
 export class Wishlist implements OnInit {
 
@@ -27,7 +30,10 @@ export class Wishlist implements OnInit {
   constructor(
     private wishlistService: WishlistService,
     private productService: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cartService: CartService,
+    private router: Router,
+    private toastr: ToastrService,
   ) {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -140,12 +146,30 @@ export class Wishlist implements OnInit {
   }
 
   // Add to cart functionality
-  addToCart(productId: number): void {
-    // Cart service'i kullanarak sepete ekleme işlemi
-    // this.cartService.addToCart(productId);
-    console.log('Ürün sepete eklendi:', productId);
+  addToCart(productId: number, quantity: number = 1): void {
+    const userId = Number(localStorage.getItem('userId'));
 
-    // Örnek: Toast notification göstermek için
-    // this.toastr.success('Ürün sepete eklendi!');
+    if (!userId) {
+      this.toastr.error('Lütfen giriş yapın.');
+      return;
+    }
+
+    if (!quantity || quantity < 1) {
+      quantity = 1;
+    }
+
+    this.cartService.addProductToCart(userId, productId, quantity).subscribe({
+      next: () => {
+        this.toastr.success('Ürün sepete eklendi!');
+        console.log(`Ürün (${productId}) ${quantity} adet sepete eklendi.`);
+        this.router.navigate(['/cart']);
+      },
+      error: (err) => {
+        console.error('Sepete ekleme hatası:', err);
+        this.toastr.error('Ürün sepete eklenemedi.');
+      }
+    });
   }
+
+
 }

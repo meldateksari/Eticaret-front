@@ -1,23 +1,27 @@
+<div class="max-w-2xl mx-auto mt-20 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+  <h2 class="text-3xl font-bold mb-6 text-center text-gray-900 tracking-tight">Siparişiniz Oluşturuldu</h2>
 
-<div class="max-w-2xl mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-4">Siparişiniz Oluşturuldu</h2>
+  <div *ngIf="order" class="space-y-6 text-gray-800">
+    <div class="grid grid-cols-2 gap-y-4 gap-x-6 text-base">
+      <p><span class="font-semibold text-gray-900">Sipariş ID:</span> {{ order.id }}</p>
+      <p><span class="font-semibold text-gray-900">Kullanıcı ID:</span> {{ order.userId }}</p>
+      <p><span class="font-semibold text-gray-900">Tarih:</span> {{ order.orderDate | date:'medium' }}</p>
+      <p><span class="font-semibold text-gray-900">Toplam Tutar:</span> {{ order.totalAmount }} ₺</p>
+      <p><span class="font-semibold text-gray-900">Durum:</span> {{ order.status }}</p>
+    </div>
 
-  <div *ngIf="order">
-    <p><strong>Sipariş ID:</strong> {{ order.id }}</p>
-    <p><strong>Kullanıcı ID:</strong> {{ order.userId }}</p>
-    <p><strong>Tarih:</strong> {{ order.orderDate | date:'medium' }}</p>
-    <p><strong>Toplam Tutar:</strong> {{ order.totalAmount }} ₺</p>
-    <p><strong>Durum:</strong> {{ order.status }}</p>
-
-    <hr class="my-4" />
-
-    <h3 class="text-lg font-semibold mb-2">Ürünler:</h3>
-    <ul>
-      <li *ngFor="let item of order.orderItems" class="border-b py-2">
-        {{ item.productName }} - {{ item.quantity }} x {{ item.price }} ₺
-      </li>
-    </ul>
+    <div class="border-t border-gray-300 pt-4">
+      <h3 class="text-xl font-semibold text-gray-900 mb-3">Ürünler</h3>
+      <ul class="divide-y divide-gray-200">
+        <li *ngFor="let item of order.orderItems" class="py-3 flex justify-between items-center">
+          <div class="font-medium text-gray-900">{{ item.productName }}</div>
+          <div class="text-sm text-gray-600">{{ item.quantity }} x {{ item.price }} ₺</div>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <div *ngIf="!order" class="text-gray-500">Sipariş bulunamadı.</div>
+  <div *ngIf="!order" class="text-gray-500 text-center py-6 text-lg">
+    Sipariş bulunamadı.
+  </div>
 </div>

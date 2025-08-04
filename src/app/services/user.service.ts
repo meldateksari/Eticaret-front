@@ -46,5 +46,17 @@ export class UserService {
     return this.http.get<Product[]>(`${this.apiUrl}/${userId}/recommended-products`);
   }
 
+  uploadProfileImage(file: File): Observable<{ imageUrl: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<{ imageUrl: string }>(
+      'http://localhost:8080/upload-profile-image', // ← Tam backend URL'si
+      formData
+    );
+  }
+
+
+
 
 }

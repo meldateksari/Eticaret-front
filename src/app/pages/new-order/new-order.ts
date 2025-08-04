@@ -21,8 +21,30 @@ export class NewOrder implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const orderId = this.route.snapshot.paramMap.get('id');
-    console.log(orderId);
+    const id = this.route.snapshot.paramMap.get('id');
+    const orderId = Number(id);
 
+    if (!isNaN(orderId)) {
+      this.orderService.getOrderById(orderId).subscribe({
+        next: (data) => {
+          this.order = {
+            ...data,
+            orderItems: (data.orderItems ?? []).map(item => ({
+              productName: item.productName,
+              quantity: item.quantity,
+              price: item.price
+            }))
+          };
+        },
+        error: (err) => {
+          console.error('Sipariş alınamadı:', err);
+        }
+      });
+    } else {
+      console.warn('Geçersiz sipariş ID:', id);
+    }
   }
+
+
+
 }

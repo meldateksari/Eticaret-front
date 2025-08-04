@@ -92,4 +92,23 @@
   <p class="text-center text-sm text-[#974e52] mt-4">
     This is a fake form. No data is saved or processed.
   </p>
+  <!-- Saved Cards -->
+  <div *ngIf="savedCards.length > 0" class="mt-8">
+    <h3 class="text-lg font-semibold text-[#1b0e0f] mb-2">Saved Cards</h3>
+
+    <div
+      *ngFor="let card of savedCards"
+      (click)="fillFormFromCard(card)"
+      class="cursor-pointer flex justify-between items-center bg-white border px-4 py-2 rounded mb-2 hover:bg-gray-100"
+    >
+      <div>
+        <p class="font-mono text-sm">**** **** **** {{ card.cardNumber.slice(-4) }}</p>
+        <p class="text-xs text-gray-500">Expires: {{ card.expiryDate }}</p>
+      </div>
+      <button (click)="deleteCard(card.id!)" class="text-red-600 text-sm hover:underline">
+        Delete
+      </button>
+    </div>
+  </div>
+
 </div>

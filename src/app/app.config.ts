@@ -10,6 +10,8 @@ import {MessageService} from 'primeng/api';
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr';
 import {JwtInterceptor} from './interceptors/jwt.interceptor';
+import {provideToastr} from 'ngx-toastr';
+import {FileUploadModule} from 'primeng/fileupload';
 
 registerLocaleData(localeTr);
 
@@ -24,6 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
 
     provideAnimationsAsync(),
+    provideToastr(),
+
     providePrimeNG({
       theme: {
         preset: Aura

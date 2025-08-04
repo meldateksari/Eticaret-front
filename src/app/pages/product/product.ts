@@ -174,6 +174,8 @@ export class Product implements OnInit {
     this.wishlistService.addProductToWishlist(request).subscribe({
       next: () => {
         console.log('Ürün istek listesine eklendi:', product.name);
+
+        this.router.navigate(['/wishlist']);
       },
       error: (err) => {
         console.error('İstek listesine eklenirken hata:', err);

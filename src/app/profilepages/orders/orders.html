@@ -13,12 +13,14 @@
             <table class="flex-1 w-full">
               <thead>
               <tr class="bg-[#fcf8f8]">
-                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Order #</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">#</th>
                 <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Date</th>
                 <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Total</th>
-                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Payment</th>
-                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Status</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Shipping Address</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Billing Address</th>
                 <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Tracking</th>
+                <th class="px-4 py-3 text-left text-[#1b0e0f] text-sm font-medium">Product Names</th>
+
               </tr>
               </thead>
               <tbody>
@@ -26,29 +28,21 @@
                 <td class="px-4 py-2 text-sm text-[#1b0e0f] font-normal">#{{ order.id }}</td>
                 <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.orderDate}}</td>
                 <td class="px-4 py-2 text-sm text-[#974e52] font-normal">${{ order.totalAmount  }}</td>
-                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.paymentStatus }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.shippingAddressId }}</td>
+                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.billingAddressId }}</td>
                 <td class="px-4 py-2 text-sm font-normal">
                   <span class="inline-block rounded-full px-3 py-1 text-sm bg-[#f3e7e8] text-[#1b0e0f] font-medium">
                     {{ order.status }}
                   </span>
                 </td>
-                <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ order.trackingNumber || '-' }}</td>
+                <li *ngFor="let item of order.orderItems" class="py-3 flex justify-between items-center">
+                  <td class="px-4 py-2 text-sm text-[#974e52] font-normal">{{ item.productName }}</td>
+                </li>
               </tr>
               </tbody>
             </table>
           </div>
         </div>
-
-        <!-- Order Items for each order -->
-        <div *ngFor="let order of orders" class="mt-4 border border-[#e7d0d1] rounded-xl bg-white p-4">
-          <p class="text-[#1b0e0f] text-lg font-semibold mb-2">Items for Order #{{ order.id }}</p>
-          <ul class="list-disc pl-6 space-y-1">
-            <li *ngFor="let item of order.items">
-              {{ item.productName }} - {{ item.quantity }} × \${{ item.priceAtPurchase.toFixed(2) }}
-            </li>
-          </ul>
-        </div>
-
         <!-- No Orders -->
         <ng-template #noOrders>
           <p class="text-center text-[#1b0e0f] text-lg mt-10">You have no orders yet.</p>

@@ -159,6 +159,29 @@
             </label>
           </div>
 
+          <!-- Profile Photo Upload -->
+          <div class="flex max-w-[480px] flex-col gap-4 px-4 py-3">
+            <p class="text-[#191011] text-base font-medium">Profile Photo</p>
+
+            <!-- Image Preview -->
+            <div *ngIf="imageUrl" class="mb-3">
+              <img [src]="imageUrl" alt="Profile Image" class="w-32 h-32 rounded-full object-cover border" />
+            </div>
+
+            <!-- PrimeNG File Upload -->
+            <p-fileUpload
+              name="file"
+              customUpload="true"
+              accept="image/*"
+              chooseLabel="Select Image"
+              (uploadHandler)="uploadProfileImage($event)"
+              auto
+              [showUploadButton]="false"
+              [showCancelButton]="false"
+            ></p-fileUpload>
+          </div>
+
+
           <!-- Phone Number -->
           <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
             <label class="flex flex-col min-w-40 flex-1">
