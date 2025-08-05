@@ -17,6 +17,7 @@ import {Payments} from './pages/payments/payments';
 import {NewOrder} from './pages/new-order/new-order';
 import {ProductDetail} from './pages/product-detail/product-detail';
 import {Wishlist} from './pages/wishlist-page/wishlist-page';
+import {Reviews} from './pages/reviews/reviews';
 
 
 
@@ -38,6 +39,7 @@ export const routes: Routes = [
   { path: 'payments', component: Payments},
   { path: 'new-order/:id', component: NewOrder},
   { path: 'product/:id', component: ProductDetail},
+  { path: 'reviews', component: Reviews },
 
 
 ];

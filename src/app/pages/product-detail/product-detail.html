@@ -68,8 +68,19 @@
     </div>
 
   </div>
+
 </div>
 
 <app-recommended-products></app-recommended-products>
+<app-reviews
+  *ngIf="currentUser && product"
+  [productId]="product.id"
+  [currentUserId]="currentUser"
+></app-reviews>
+
+
+
+
+
 
 
