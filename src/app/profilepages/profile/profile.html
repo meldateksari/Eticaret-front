@@ -165,7 +165,9 @@
 
             <!-- Image Preview -->
             <div *ngIf="imageUrl" class="mb-3">
-              <img [src]="imageUrl" alt="Profile Image" class="w-32 h-32 rounded-full object-cover border" />
+<!--              <img [src]="imageUrl" alt="Profile Image" class="w-32 h-32 rounded-full object-cover border" />-->
+              <img src="data:image/jpeg;base64,{{(userO | async)?.image}}" alt="Profile Image">
+
             </div>
 
             <!-- PrimeNG File Upload -->

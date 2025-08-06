@@ -28,16 +28,20 @@ export class ProductDetail implements OnInit {
     private reviewService: ReviewService,
   ) {}
 
+
   ngOnInit() {
     const productId = Number(this.route.snapshot.paramMap.get('id'));
-    this.productInteractionService.getProductInteraction(productId)
-      .subscribe(p => this.product = p as Product);
-
     this.currentUser = Number(localStorage.getItem("userId"));
 
-    this.reviewService.getReviewsByProduct(this.product.id).subscribe(data => {
-      this.reviews = data;
-    });
+    this.productInteractionService.getProductInteraction(productId)
+      .subscribe((p: Product) => {
+        this.product = p;
 
+        // Ürün geldikten sonra yorumları al
+        this.reviewService.getReviewsByProduct(this.product.id).subscribe(data => {
+          this.reviews = data;
+        });
+      });
   }
+
 }

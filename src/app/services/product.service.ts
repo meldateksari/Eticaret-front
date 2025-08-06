@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {Product} from '../models/product.model';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 @Injectable()
 export class ProductService {
@@ -28,9 +28,10 @@ export class ProductService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
-
-
-
-
+  getLatestProducts(): Observable<Product[]> {
+    return this.getAll().pipe(
+      map(products => [...products].slice(-3).reverse()) // son 3 ürünü al
+    );
+  }
 
 }

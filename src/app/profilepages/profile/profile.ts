@@ -9,6 +9,7 @@ import { User } from '../../models/user.model';
 
 import {HttpClient} from '@angular/common/http';
 import {FileUpload, FileUploadModule} from 'primeng/fileupload';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +19,8 @@ import {FileUpload, FileUploadModule} from 'primeng/fileupload';
   providers: [UserService]
 })
 export class Profile implements OnInit {
+  private serverBaseUrl = 'http://localhost:8080';
+  userO!:Observable <User>;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -54,13 +57,18 @@ export class Profile implements OnInit {
 
   ngOnInit(): void {
     const storedUser = this.authService.getUser();
+    this.userO = this.authService.user$;
     if (storedUser?.id) {
       this.user.set(storedUser);
+
+      this.imageUrl = storedUser.profileImageUrl ?? null;
+
       this.initializeForms();
     } else {
       this.router.navigate(['/login']);
     }
   }
+
 
   private initializeForms(): void {
     const currentUser = this.user();
@@ -111,6 +119,7 @@ export class Profile implements OnInit {
           // Mevcut local user bilgisini sunucudan gelenle birleştirelim ki eksik alan kalmasın.
           const finalUser = { ...currentUser, ...updatedUserFromServer };
           localStorage.setItem('user', JSON.stringify(finalUser));
+          this.authService.userSubject.next(finalUser);
           this.user.set(finalUser);
         },
         error: () => {
@@ -166,27 +175,31 @@ export class Profile implements OnInit {
       error: () => alert('Hesap silinemedi.'),
     });
   }
-  uploadProfileImage(event: any) {
+
+  uploadProfileImage(event: any): void {
     const file: File = event.files[0];
     if (!file) return;
 
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageUrl = reader.result as string; // anlık önizleme
+    };
+    reader.readAsDataURL(file);
+
     this.userService.uploadProfileImage(file).subscribe({
       next: (res) => {
-        this.imageUrl = res.imageUrl;
+        this.imageUrl = res.imageUrl; // base64 veri
 
         const currentUser = this.user();
         if (currentUser) {
-          const updatedUser = { ...currentUser, profileImageUrl: res.imageUrl };
+          const updatedUser = { ...currentUser, profileImageUrl: res.imageUrl }; // base64 burada
           localStorage.setItem('user', JSON.stringify(updatedUser));
           this.user.set(updatedUser);
         }
 
         alert("Profil fotoğrafı yüklendi.");
       },
-      error: (err) => {
-        console.error('Yükleme hatası:', err);
-        alert("Yükleme başarısız oldu.");
-      }
+
     });
   }
 

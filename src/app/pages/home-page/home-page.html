@@ -1,128 +1,60 @@
-<html>
+<!-- 🧭 Kategori Listesi -->
+<section class="category">
+  <ul>
+    <li *ngFor="let c of categories">
+      <a [routerLink]="['/products']" [queryParams]="{ categoryId: c.id }">
+        {{ c.name }}
+      </a>
+    </li>
+  </ul>
+</section>
+<!-- 🖼️ Swiper – Yeni Ürünler -->
+<section class="latest" *ngIf="latestProducts.length">
+  <h2>Yeni Gelenler</h2>
 
-<body>
-<div class="relative flex size-full min-h-screen flex-col bg-[#fbf9f9] group/design-root overflow-x-hidden" style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'>
-  <div class="layout-container flex h-full grow flex-col">
-
-    <div class="px-40 flex flex-1 justify-center py-5">
-      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
-        <div class="@container">
-          <div class="@[480px]:px-4 @[480px]:py-3">
-            <div
-              class="bg-cover bg-center flex flex-col justify-end overflow-hidden bg-[#fbf9f9] @[480px]:rounded-xl min-h-80"
-              style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoodx3NFMQ2TLirmOQwQiTos4zhIgJ7ZarsNWzGZI0LHn8fpaQLeGsueVzBlywJGPH0hkyJTtMXAB9SK50DIbp-KJTBIw2EW2noRiBjZEqYTcyhLjoDFSu0QpowfDBE0SUZ8Qw9zPT2zmlNSV04aNUf-T_9_EbP8vv7HBuoPCiVkHoDjcgjX3RDvYMunJPoo0T7g-Pl6fFUfBulMVm9M1Sr1zmluk9P3DTJO0xfo9SX94oR2woqLHMiAVobNqjhdlDrCHnn5R2vBfE");'
-            >
-              <div class="flex p-4"><p class="text-white tracking-light text-[28px] font-bold leading-tight">Summer Collection</p></div>
+  <div class="swiper" #swiperRef>
+    <div class="swiper-wrapper">
+      <div class="swiper-slide" *ngFor="let p of latestProducts">
+        <a [routerLink]="['/product', p.id]" class="slide-link">
+          <div class="slide-content">
+            <img [src]="p.imageUrl" [alt]="p.name" />
+            <div class="info">
+              <h3>{{ p.name }}</h3>
+              <p>{{ p.description }}</p>
+              <span>{{ p.price | currency:'TRY' }}</span>
             </div>
           </div>
-        </div>
-        <h2 class="text-[#191011] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Trending Now</h2>
-        <div class="flex overflow-y-auto [-ms-scrollbar-style:none] [scrollbar-width:none] [&amp;::-webkit-scrollbar]:hidden">
-          <div class="flex items-stretch p-4 gap-3">
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAosbYIo6yq_8TdqucmTiWFfWuHZRUCNRXkYsfu0uiDEhO51J0ncAQExW7-8ZnVAmtS0AdILVtgH1180rxzj4YXr9Z66-radlgBNLi3IV8Mk-8fTj_1gb8feQiR9-65bTrHiIUsiz_lcaPIXbFrLU1-qwFpIn3mF2lB9yWK6CNOm0IyT1uIHmYW6Jt6b7infQP7slY8kQ0hMYLWh29PZpgSor1SmOCgUAgsi4eD1y5nVXXZg25aC2YySa_ohQLbbvvtfjWbRap8yUkF");'
-              ></div>
-              <div>
-                <p class="text-[#191011] text-base font-medium leading-normal">Urban Chic</p>
-                <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Explore the latest trends</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMLxuE3qBTOAK4bI5kGP_h4oTVuJkFu-u4eqredcmP73ubVzDFaE6DSrea4R1BSx9ixtwLKyv4jsu2TRmlMyo6drnA4SgwwZGHWVt2m0VCWaoTUo1noU2Yv8sHVdSpsMpINvqkf9p3DJS530d91Nfb2PU9QhaEVzxRDwyPRuIUO0NxgEoRfLhsu9bRvK86Pc5TByhYbGlgpF3uDbMyPWPLmlCxM7N4l_kJ0MJbaFzhUhy-muHLmz8ks9xb7i1ZjUODRAnl2OHF2wZN");'
-              ></div>
-              <div>
-                <p class="text-[#191011] text-base font-medium leading-normal">Street Style</p>
-                <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Discover your style</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA-miKiyQ5QBGQBqWpQCKop-rwLdtPQuPwbhqsQO2DW3OHR7mOL9i-A-7vsaQIXnfIDe6gEdas66r1XgG2EB6eJvyKEOsjZAheLPH17NhJxc35ICvA4-tUN1oj_9cl6v-5yXPZ73iJ7bTaspat4QiE1pj1fp-djikQ4_9kB8iomfN_Drw1LIaWdHfyZ_f5Sf023jHoyKgAGlvxZKgYoiQUPUy-dlZNsrD9EL4yIaUDNxKveKXoPLBK0fVejKu2NRidJ_WRw3ch5wx_a");'
-              ></div>
-              <div>
-                <p class="text-[#191011] text-base font-medium leading-normal">Boho Vibes</p>
-                <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Find your perfect look</p>
-              </div>
-            </div>
-            <div class="flex h-full flex-1 flex-col gap-4 rounded-lg min-w-40">
-              <div
-                class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl flex flex-col"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCM2UIf3wFd7G2m1ej0quan3ZpLTNN7RRJDNkhjOU1mw5cQl-SEqrh-6VWtMr4b6s08horsit4DfPmZ0liPCurgLHX6osjo1LEWu98Ccb6YlDQHxjV6GfrZYVnOjwoMyKOiCeFw15e55Mz9ehkf0Elfuir6eD05XW0Buk2_MfFhQFdI0pbJUCP0kKseDkXzrhOHOiJzH5ml0RmvjTOMgvJqKgZnh86qZ8ToK2P27sF9Bg8RgG6K2-pJVW-jFjosmMrfjeIrAZnFrkR4");'
-              ></div>
-              <div>
-                <p class="text-[#191011] text-base font-medium leading-normal">Casual Cool</p>
-                <p class="text-[#8b5b5d] text-sm font-normal leading-normal">Shop the collection</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h2 class="text-[#191011] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">New Arrivals</h2>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0_s_Jo6Yx_YKR7R37zFPneeJHUqvrX-IsLpW_Uy8NFOu8KTbQgzl3mSMt7oMfwBYDAvFIkPHd4sPFsMoC49IUZlHPLRiA7lMlTDbIpvqaYotathvow7_ouUh4lmWFrhdKjCbDWIUo8VYg-HGD0H837DqyGeFw3RmvgTTNb4VjMJbG7hisefo2NisEAVZchqq6TRQ94NkwCJbeA0g68qS86SAZfCBb8JF0ebw38l2jZuGJZACXMoDzS_MJYlm6QIRzc6oAPLCoenoB");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Ribbed Knit Top</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAtxQuQVz-RGLwGyvFqqYNdeQdroODLP7J0cv_FSiFRWXG5qNw7KrFyXz_1_WY9bep8HKmYoRrnrdu4Mc46pfRwpvCqPfe0Bpw_KFk4nq7vj2RUxm5JZcHhaBnAm1aIe6L6QHY7RFs7c0k58tTnVuxN2Fr-5gIkSgz44WuBCqiWRX9ZEf6PqyKdnfffz3K2cit0Isre-JpWAc40Kn0AOq-EN96B3NAWKJ7iuyY-0sZmI7wPuGAKJf-ov3bS2l2cldCPVcW20aLzEZn9");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Cargo Pants</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAleNvZyKww9z3aKlNSq2a3wLAvqn4O5Uy4tFuvjhQ2IQ9S2ABvc2m3om-8tbEuPbbA2uxWXubRDo0RakmSmcuXEBmCQG-S78KE_hw78ubQVld2exQR6q5--u4PV_rJ-7NjxQKkNtx2yG4UKP5QfS6KTQ-NPvI9j6ztVhWDe4cuJaqaIpHYxUboKeHoh_sN4S85ibh3LTH_4zcYm-UBuUcRY_y-0azerfDO2l9PLeoQzH05E2s1y1I2EumULDdr6KDO3_OWZSQ8Bu2P");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Platform Sneakers</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBluay3ESf2dJfBrogeDh8aZ761gmC90siCWiU-vWX_q1WpAGtbbh-ZuOLPQvOucI6piRfdqIM7Qf48mEPhzP2terTsszoYSXpuNSH9x0TR04KJQR5ocDJZZVPOywQ4Jldd-XUhRDfSFzRz-bbbF0WH7TqF2p7ezUG12jGrAckXpyQWsbiT_Pnx_cNzyO0sA3i6WSgpk48VaGqTCzLzwFcTU9fP7-2xqb6NUkynGpSavKiqb0aLDh2K9jPvWAfrFVcdACr7k5tnRwOv");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Oversized Blazer</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC3wRlh1JkHBSpxvYPdv0F4uNZBrvjXpC46WH10GhO3aYRkrqH6HCUhmvq2t0BZb0NfIkwXbqy3fGOmCvUxLX178p9TSoSyNosxy_D7bXkgjhFIOyWk3piZJ5na8ksF_5Uqbi1r-yCLY4fSoUHX1w9DLWejsmaLHhh1EOmvQOIJAWnQJirkz0oQJKtfZBPky_FD8mvOuk_6Vj1zPqzjOxtK_vRzzBEiTkpnZC8LRKzGczevG_WUTIPU-9zsuCBvzlh4C_tsTd8myAbQ");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Graphic Tee</p>
-          </div>
-          <div class="flex flex-col gap-3 pb-3">
-            <div
-              class="w-full bg-center bg-no-repeat aspect-[3/4] bg-cover rounded-xl"
-              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0PDtXpuGvrq9kfJ4zBYN8A35SovVnyU4Y_OKXl_7XLjgvUNtuTflKHFNz4ymMHFJpxCVg8Uh_59tJ015UN8A0R-SwiTdlVYM9cxNx_31D8PvsppF0AOHtsOhkay9XRsCyRVpT4nMFNlllSiTcRSAEep0xvTCWz8O6pAaVQWz7dmjnxLNDwdC6Wdan_UFS3OOUkSl31-SbCw4gxMfPrZ_cjfvG8UVZipLoXhvQrpnR4J0SJg8o7gAum9n0B4Tezw7Gj-QbbgLu5gdi");'
-            ></div>
-            <p class="text-[#191011] text-base font-medium leading-normal">Bucket Hat</p>
-          </div>
-        </div>
-        <h2 class="text-[#191011] text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-5">Shop by Category</h2>
-<div class="grid grid-cols-[repeat(auto-fit,minmax(158px,1fr))] gap-3 p-4">
-  <div *ngFor="let category of categories" class="flex flex-col gap-3 pb-3">
-    <a [routerLink]="['/products']" [queryParams]="{ categoryId: category.id }">
-      <div
-        class="w-full bg-center bg-no-repeat aspect-square bg-cover rounded-xl"
-        [style.background-image]="'url(' + (category.imageUrl || 'https://via.placeholder.com/158') + ')'"
-      ></div>
-      <p class="text-[#191011] text-base font-medium leading-normal">{{ category.name }}</p>
-    </a>
-  </div>
-</div>
-
+        </a>
       </div>
     </div>
+
+    <!-- Navigation / Pagination -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-pagination"></div>
   </div>
-</div>
-</body>
-</html>
+</section>
+
+<!-- 📦 Tüm Ürünler -->
+<section class="grid">
+  <h2>Tüm Ürünler</h2>
+
+  <div class="cards">
+    <div
+      *ngFor="let p of allProducts"
+      class="card-link"
+    >
+      <article>
+        <div class="img-wrapper">
+          <a [routerLink]="['/product', p.id]">
+            <img [src]="p.imageUrl" [alt]="p.name" loading="lazy" />
+          </a>
+        </div>
+        <h4>{{ p.name }}</h4>
+        <span class="price">{{ p.price | currency:'TRY' }}</span>
+        <button (click)="addToCart(p)">Sepete Ekle</button>
+      </article>
+    </div>
+  </div>
+</section>
 

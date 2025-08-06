@@ -14,10 +14,13 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
   isActive: boolean;
+  profileImageUrl?: string
 
   /*roles?: Role[];
   addresses?: Address[];
   reviews?: Review[];
   cart?: Cart;
   interactions?: UserProductInteraction[];*/
+
+  image: number[];
 }

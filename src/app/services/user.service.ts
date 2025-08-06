@@ -51,7 +51,7 @@ export class UserService {
     formData.append('file', file);
 
     return this.http.post<{ imageUrl: string }>(
-      'http://localhost:8080/upload-profile-image', // ← Tam backend URL'si
+      `${this.apiUrl}/upload-profile-image`,
       formData
     );
   }

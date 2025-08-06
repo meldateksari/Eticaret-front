@@ -14,7 +14,7 @@
     </div>
 
     <div class="flex items-center gap-9">
-      <a class="text-red-700 text-sm font-medium leading-normal" href="#">New</a>
+
       <a class="text-[#191011] text-sm font-medium leading-normal" [routerLink]="['/products']">
         Products
       </a>
@@ -95,6 +95,7 @@
           <div
             class="w-10 h-10 rounded-full bg-gray-100 bg-cover bg-center border border-gray-300 shrink-0"
           >
+            <img src="data:image/jpeg;base64,{{(user | async)?.image}}" alt="Profile Image">
           </div>
           <span class="text-gray-800 font-medium text-sm md:text-base truncate">
         Hoş geldiniz,

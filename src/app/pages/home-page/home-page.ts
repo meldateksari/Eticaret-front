@@ -1,8 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { CategoryService } from '../../services/category.service';
-import { Category } from '../../models/category.model';
+import {Component, OnInit, AfterViewInit, NgZone, ViewChild, ElementRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+
+import { CategoryService } from '../../services/category.service';
+import { ProductService } from '../../services/product.service';
+
+import { Category } from '../../models/category.model';
+import { Product } from '../../models/product.model';
+
+import Swiper from 'swiper';
+import {Autoplay, Navigation, Pagination} from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import {CartService} from '../../services/cart.service';
 
 @Component({
   selector: 'app-home-page',
@@ -10,24 +22,97 @@ import { RouterLink } from '@angular/router';
   imports: [CommonModule, RouterLink],
   templateUrl: './home-page.html',
   styleUrls: ['./home-page.css'],
-  providers: [CategoryService]
+  providers: [CategoryService, ProductService,CartService]
 })
-export class HomePageComponent implements OnInit {
+export class HomePage implements OnInit, AfterViewInit {
   categories: Category[] = [];
+  latestProducts: Product[] = [];
+  allProducts: Product[] = [];
 
-  constructor(private categoryService: CategoryService) {}
+  quantities: { [productId: number]: number } = {};
+  @ViewChild('swiperRef', { static: false }) swiperRef!: ElementRef;
+  constructor(
+    private categoryService: CategoryService,
+    private productService: ProductService,
+    private cartService: CartService,
+    private ngZone: NgZone,
+    private router: Router
+
+  ) {}
 
   ngOnInit(): void {
+    this.productService.getAll().subscribe(data => {
+      this.allProducts = data;
+      this.latestProducts = [...data].slice(-5).reverse();
+    });
+
     this.loadCategories();
   }
 
+
+  ngAfterViewInit(): void {
+    this.ngZone.runOutsideAngular(() => {
+      const checkAndInitSwiper = () => {
+        const swiperEl = this.swiperRef?.nativeElement;
+
+        if (swiperEl && swiperEl.querySelector('.swiper-wrapper')?.children.length > 0) {
+          new Swiper(swiperEl, {
+            modules: [Autoplay, Navigation, Pagination],
+            loop:true,
+            autoplay: {
+              delay: 3000,
+              disableOnInteraction: false
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev'
+            },
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true
+            },
+            slidesPerView: 1.2,
+            spaceBetween: 24,
+            breakpoints: {
+              480: { slidesPerView: 2 },
+              768: { slidesPerView: 3 }
+            }
+          });
+        } else {
+          // DOM henüz hazır değilse yeniden dene
+          setTimeout(checkAndInitSwiper, 100);
+        }
+      };
+
+      checkAndInitSwiper();
+    });
+  }
+
+
+
   loadCategories(): void {
     this.categoryService.getAllCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
+      next: (data) => this.categories = data,
+      error: (err) => console.error('Kategoriler yüklenirken hata:', err)
+    });
+  }
+
+  addToCart(product: Product) {
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('Lütfen giriş yapın.');
+      return;
+    }
+
+    const productId = product.id;
+    const quantity = this.quantities[productId] || 1;
+
+    this.cartService.addProductToCart(+userId, productId, quantity).subscribe({
+      next: () => {
+        this.router.navigate(['/cart']);
       },
       error: (err) => {
-        console.error('Kategoriler yüklenirken bir hata oluştu:', err);
+        console.error('Sepete ekleme hatası:', err);
       }
     });
   }

@@ -48,14 +48,10 @@
             <div class="size-10 rounded-full bg-cover bg-center"></div>
 
             <div class="flex-1">
-              <p class="text-base font-medium text-[#191010]">User ID: {{ rev.userId }}</p>
+              <p class="text-base font-medium text-[#191010]">User: {{ rev.username }}</p>
               <p class="text-sm text-[#8b5b5c]">{{ rev.createdAt  }}</p>
             </div>
 
-            <button *ngIf="rev.userId === currentUserId" (click)="deleteReview(rev.id)"
-                    class="text-sm text-[#8b5b5c] hover:underline" title="Delete">
-              Delete
-            </button>
           </div>
 
           <div class="flex gap-0.5">
