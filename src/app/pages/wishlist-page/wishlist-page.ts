@@ -6,16 +6,19 @@ import { ProductService } from '../../services/product.service';
 import { WishlistDto, WishlistItemDto } from '../../models/wishlist.model';
 import { Product } from '../../models/product.model';
 import {CartService} from '../../services/cart.service';
-import { ToastrService } from 'ngx-toastr';
+
+import { MessageService } from 'primeng/api';
+import {Toast} from 'primeng/toast';
+
 
 
 @Component({
   selector: 'app-wishlist-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, Toast],
   templateUrl: './wishlist-page.html',
   styleUrls: ['./wishlist-page.css'],
-  providers: [WishlistService, ProductService,CartService]
+  providers: [WishlistService, ProductService,CartService,MessageService,Toast]
 })
 export class Wishlist implements OnInit {
 
@@ -33,7 +36,8 @@ export class Wishlist implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
-    private toastr: ToastrService,
+
+    private messageService: MessageService,
   ) {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
@@ -105,27 +109,7 @@ export class Wishlist implements OnInit {
     return item.productId;
   }
 
-  addProductToWishlist(productId: number): void {
-    if (!this.userId) {
-      this.error = 'Kullanıcı ID geçersiz.';
-      return;
-    }
 
-    const request = {
-      userId: this.userId,
-      productId: productId
-    };
-
-    this.wishlistService.addProductToWishlist(request).subscribe({
-      next: (updatedWishlist) => {
-        this.wishlist = updatedWishlist;
-        this.loadProduct(productId);
-      },
-      error: (err) => {
-        console.error('Ürün eklenirken hata oluştu:', err);
-      }
-    });
-  }
 
   removeProductToWishlist(productId: number): void {
     if (!this.wishlist) {
@@ -145,12 +129,15 @@ export class Wishlist implements OnInit {
     });
   }
 
-  // Add to cart functionality
   addToCart(productId: number, quantity: number = 1): void {
     const userId = Number(localStorage.getItem('userId'));
 
     if (!userId) {
-      this.toastr.error('Lütfen giriş yapın.');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Giriş Gerekli',
+        detail: 'Lütfen giriş yapın.'
+      });
       return;
     }
 
@@ -160,16 +147,21 @@ export class Wishlist implements OnInit {
 
     this.cartService.addProductToCart(userId, productId, quantity).subscribe({
       next: () => {
-        this.toastr.success('Ürün sepete eklendi!');
-        console.log(`Ürün (${productId}) ${quantity} adet sepete eklendi.`);
-        this.router.navigate(['/cart']);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sepete Eklendi',
+          detail: `${quantity} adet ürün sepete eklendi.`
+        });
       },
       error: (err) => {
         console.error('Sepete ekleme hatası:', err);
-        this.toastr.error('Ürün sepete eklenemedi.');
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Hata',
+          detail: 'Ürün sepete eklenirken bir hata oluştu.'
+        });
       }
     });
   }
-
 
 }

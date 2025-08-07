@@ -10,12 +10,15 @@ import { User } from '../../models/user.model';
 import {HttpClient} from '@angular/common/http';
 import {FileUpload, FileUploadModule} from 'primeng/fileupload';
 import {Observable} from 'rxjs';
+import {ProfileSidebar} from '../profile-sidebar/profile-sidebar';
+
+
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.html',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule, FileUploadModule,FileUpload],
+  imports: [RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule, FileUploadModule,FileUpload,ProfileSidebar],
   providers: [UserService]
 })
 export class Profile implements OnInit {

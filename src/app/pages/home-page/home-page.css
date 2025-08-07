@@ -1,12 +1,13 @@
 /* ----------  Temel Değişkenler  ---------- */
 :root {
-  --font-head: 'Poppins', sans-serif;
+  --font-head: 'Montserrat', sans-serif;
   --font-body: 'Roboto', sans-serif;
   --txt-dark: #111;
-  --txt-muted: #666;
   --bg: #fff;
-  --accent: #e52a2a;
   --radius: 8px;
+  --accent: #ff4f00; /* Canlı turuncu, dikkat çekici bir vurgu sağlayabilir */
+  --txt-muted: #555; /* Hafif koyulaştırılarak kontrast artırılır */
+
 }
 
 /* ----------  Genel  ---------- */
@@ -41,10 +42,10 @@ body {
 
 .category a:hover {
   background: var(--txt-dark);
-  color: #fff;
+  color: rgba(133, 130, 130, 0.6);
 }
 
-/* ----------  Yeni Ürünler / Swiper  ---------- */
+/* ----------  Yeni Ürünler / Swiper  ---------- a*/
 .latest {
   padding: 40px 16px;
   text-align: center;
@@ -231,8 +232,8 @@ body {
   background: none;
 
 }
-button {
-  background: linear-gradient(to right, #4f4f60, rgba(108, 125, 158, 0.6));
+button.gradient {
+  background: linear-gradient(to right, #000000, rgb(28, 28, 30));
   color: white;
   border: none;
   padding: 8px 12px;
@@ -242,10 +243,29 @@ button {
   transition: background 0.3s ease; /* geçiş efekti */
 }
 
-button:hover {
-  background: linear-gradient(to right, #3f4c5c, #2b343e);
+.img-wrapper {
+  position: relative;
 }
 
+.favorite-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: white;
+
+  border: none;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 2;
+  transition: background 0.2s;
+  color: black;
+}
+
+.favorite-icon:hover {
+  background: #ffe6e6;
+}
 
 
 /* ----------  Responsive İyileştirmeler  ---------- */

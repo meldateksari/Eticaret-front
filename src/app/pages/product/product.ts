@@ -10,6 +10,11 @@ import {CartService} from "../../services/cart.service";
 import {FormsModule} from '@angular/forms';
 import {Wishlist} from '../wishlist-page/wishlist-page';
 import {WishlistService} from '../../services/wishlist.service';
+import { ToastrModule } from 'ngx-toastr';
+import { MessageService } from 'primeng/api';
+import {Toast} from 'primeng/toast';
+
+
 
 @Component({
   selector: 'app-product',
@@ -17,11 +22,12 @@ import {WishlistService} from '../../services/wishlist.service';
   imports: [
     CommonModule,
     FormsModule,
+    Toast,
     RouterLink
   ],
   templateUrl: './product.html',
   styleUrl: './product.css',
-  providers: [ProductService, CategoryService, WishlistService, CartService]
+  providers: [ProductService, CategoryService, WishlistService, CartService,MessageService ]
 })
 export class Product implements OnInit {
   products: ProductModel[] = [];
@@ -40,6 +46,7 @@ export class Product implements OnInit {
     private categoryService: CategoryService,
     private wishlistService: WishlistService,
     private cartService: CartService,
+    private messageService: MessageService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -142,7 +149,11 @@ export class Product implements OnInit {
   addToCart(product: ProductModel) {
     const userId = localStorage.getItem('userId');
     if (!userId) {
-      alert('Lütfen giriş yapın.');
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Giriş Gerekli',
+        detail: 'Lütfen giriş yapın.'
+      });
       return;
     }
 
@@ -151,13 +162,23 @@ export class Product implements OnInit {
 
     this.cartService.addProductToCart(+userId, productId, quantity).subscribe({
       next: () => {
-        this.router.navigate(['/cart']);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sepete Eklendi',
+          detail: `${product.name} (${quantity} adet) sepete eklendi`
+        });
       },
       error: (err) => {
         console.error('Sepete ekleme hatası:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Hata',
+          detail: 'Ürün sepete eklenirken bir hata oluştu'
+        });
       }
     });
   }
+
   addProductToWishlist(product: ProductModel): void {
     const userId = Number(localStorage.getItem('userId'));
 
@@ -173,12 +194,19 @@ export class Product implements OnInit {
 
     this.wishlistService.addProductToWishlist(request).subscribe({
       next: () => {
-        console.log('Ürün istek listesine eklendi:', product.name);
-
-        this.router.navigate(['/wishlist']);
+        this.messageService.add({
+          severity: 'success',
+          summary: 'İstek Listesi',
+          detail: `${product.name} başarıyla eklendi`
+        });
       },
       error: (err) => {
         console.error('İstek listesine eklenirken hata:', err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Hata',
+          detail: 'Ürün istek listesine eklenemedi'
+        });
       }
     });
   }

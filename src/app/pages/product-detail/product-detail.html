@@ -1,3 +1,5 @@
+<p-toast></p-toast>
+
 <div class="px-40 flex flex-1 justify-center py-5" *ngIf="product">
   <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
     <!-- Breadcrumb -->
@@ -11,25 +13,42 @@
 
     <!-- Product Images -->
     <div class="flex w-full grow bg-[#fcf8f8] p-4">
-      <div class="w-full gap-1 bg-[#fcf8f8] aspect-[2/3] rounded-lg grid grid-cols-[1fr_1fr] grid-rows-[2fr_1fr_1fr]">
+      <div class="w-full gap-1 bg-[#fcf8f8] aspect-[2/3] rounded-lg grid grid-cols-[1fr_1fr] grid-rows-[2fr_1fr_1fr] relative">
+
+        <!-- ❤️ Favori Butonu tam görsel grid'in içinde -->
+        <button
+          class="favorite-icon absolute top-2 right-2 z-10 text-[#994d51] hover:scale-110 transition-transform"
+          (click)="addProductToWishlist(product, $event)"
+          title="İstek listesine ekle"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+               fill="currentColor" viewBox="0 0 256 256">
+            <path
+              d="M178,32c-20.65,0-38.73,8.88-50,23.89C116.73,40.88,98.65,32,78,32A62.07,62.07,0,0,0,16,94c0,70,103.79,126.66,108.21,129a8,8,0,0,0,7.58,0C136.21,220.66,240,164,240,94A62.07,62.07,0,0,0,178,32ZM128,206.8C109.74,196.16,32,147.69,32,94A46.06,46.06,0,0,1,78,48c19.45,0,35.78,10.36,42.6,27a8,8,0,0,0,14.8,0c6.82-16.67,23.15-27,42.6-27a46.06,46.06,0,0,1,46,46C224,147.61,146.24,196.15,128,206.8Z">
+            </path>
+          </svg>
+        </button>
+
+        <!-- Ürün görselleri -->
         <div
           class="col-span-2 bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'"
-        ></div>
+          [style.background-image]="'url(' + product.imageUrl + ')'">
+        </div>
         <div
           class="row-span-2 bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'"
-        ></div>
+          [style.background-image]="'url(' + product.imageUrl + ')'">
+        </div>
         <div
           class="bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'"
-        ></div>
+          [style.background-image]="'url(' + product.imageUrl + ')'">
+        </div>
         <div
           class="bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'"
-        ></div>
+          [style.background-image]="'url(' + product.imageUrl + ')'">
+        </div>
       </div>
     </div>
+
 
     <!-- Product Info -->
     <h1 class="text-[#1b0e0e] text-[22px] font-bold px-4 pt-5">{{ product.name }}</h1>
@@ -62,11 +81,27 @@
       </label>
     </div>
 
-    <!-- Add to Bag -->
-    <div class="flex px-4 py-3">
-      <button class="add-to-bag">Sepete Ekle</button>
-    </div>
 
+    <div class="flex justify-center py-4">
+      <button
+        (click)="addToCart()"
+        class="add-to-bag-button flex items-center justify-center gap-2 w-full max-w-[280px]
+           px-6 py-4 text-sm font-semibold uppercase tracking-wide transition-all duration-300
+           rounded-md
+           bg-black text-white
+           hover:bg-white hover:text-black hover:border hover:border-black
+           active:scale-95
+           disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed">
+
+        <!-- 🛒 Sepet İkonu -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13l-2 5h14M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z" />
+        </svg>
+
+        Sepete Ekle
+      </button>
+    </div>
   </div>
 
 </div>

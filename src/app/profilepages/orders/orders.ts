@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import {provideHttpClient, withFetch} from '@angular/common/http';
 import {OrderService} from '../../services/order.service';
 import {Order} from '../../models/order.model';
+import {ProfileSidebar} from '../profile-sidebar/profile-sidebar';
 
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ProfileSidebar],
   templateUrl: './orders.html',
   styleUrls: ['./orders.css'],
   providers: [OrderService]

@@ -12,6 +12,7 @@ import localeTr from '@angular/common/locales/tr';
 import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {provideToastr} from 'ngx-toastr';
 import {FileUploadModule} from 'primeng/fileupload';
+import {provideAnimations} from '@angular/platform-browser/animations';
 
 registerLocaleData(localeTr);
 
@@ -25,7 +26,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
 
-    provideAnimationsAsync(),
+    provideAnimations(),
     provideToastr(),
 
     providePrimeNG({

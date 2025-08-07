@@ -1,12 +1,23 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* product.component.css */
-.container {
+.custom-container {
   display: flex;
+  width: 100%;
   min-height: 100vh;
-  gap: 0;
+  position: relative;
   font-family: 'Arial', sans-serif;
   background-color: #f8f8f8;
   color: #333;
+  flex-grow: 1;
 }
+
 
 /* Sidebar Styles */
 .sidebar {
@@ -105,9 +116,9 @@
 /* ÜÇLÜ KART DÜZENİ - ANA ALAN */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 30px;
-  flex: 1;
+  flex: 1; /* Bu özellik sayesinde kalan boşluğu doldurur */
   padding: 30px;
   background: #f8f8f8;
 }
@@ -251,8 +262,10 @@
 }
 
 .add-to-cart-btn:hover:not(:disabled) {
-  background: #333;
-  transform: translateY(-1px);
+  background-image: none !important;
+  background-color: white !important;
+  color: black !important;
+  border: 2px solid black !important;
 }
 
 .add-to-cart-btn:active {
@@ -323,7 +336,7 @@
 }
 
 @media (max-width: 768px) {
-  .container {
+  .custom-container {
     flex-direction: column;
   }
 
@@ -399,4 +412,21 @@
     padding: 10px 16px;
     font-size: 12px;
   }
+}
+/* Sağ bar sabit genişlikte en sağda */
+.right-bar {
+  display: flex;
+  width: 250px;
+  flex-shrink: 0;
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-left: 1px solid #ddd;
+  height: 100vh;
+}
+
+.right-bar-content {
+  background: white;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
 }

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
+import {ProfileSidebar} from '../profile-sidebar/profile-sidebar';
 
 @Component({
   selector: 'app-account',
-  imports: [],
+  imports: [
+    ProfileSidebar
+  ],
   templateUrl: './account.html',
   styleUrl: './account.css'
 })

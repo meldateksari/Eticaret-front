@@ -18,14 +18,11 @@
       <a class="text-[#191011] text-sm font-medium leading-normal" [routerLink]="['/products']">
         Products
       </a>
-      <a class="text-[#191011] text-sm font-medium leading-normal" [routerLink]="['/cart']">
-        Carts
-      </a>
       <a class="text-[#191011] text-sm font-medium leading-normal" [routerLink]="['/orders']">
         Orders
       </a>
       <a class="text-[#191011] text-sm font-medium leading-normal" href="#">Shipping&Billing</a>
-      <a class="text-[#191011] text-sm font-medium leading-normal" href="#">AI Interactions</a>
+
     </div>
   </div>
 
@@ -83,7 +80,7 @@
       </button>
     </div>
 
-    <!-- Profil  -->
+
     <!-- Profil -->
     @if (isLoggedIn$ | async) {
       <div
@@ -93,10 +90,15 @@
         <!-- Sol: Avatar + Hoş geldiniz -->
         <div class="flex items-center gap-3 min-w-0">
           <div
-            class="w-10 h-10 rounded-full bg-gray-100 bg-cover bg-center border border-gray-300 shrink-0"
+            class="w-10 h-10 rounded-full bg-gray-100 border border-gray-300 shrink-0 overflow-hidden"
           >
-            <img src="data:image/jpeg;base64,{{(user | async)?.image}}" alt="Profile Image">
+            <img
+              [src]="'data:image/jpeg;base64,' + (user | async)?.image"
+              alt="Profile Image"
+              class="w-full h-full object-cover"
+            >
           </div>
+
           <span class="text-gray-800 font-medium text-sm md:text-base truncate">
         Hoş geldiniz,
         <strong>{{ (user | async)?.firstName }} {{ (user | async)?.lastName }}</strong>

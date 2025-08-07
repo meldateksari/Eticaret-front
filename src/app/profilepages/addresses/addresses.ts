@@ -4,6 +4,7 @@ import { Address } from '../../models/address.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LocationService } from '../../services/location.service';
+import {ProfileSidebar} from '../profile-sidebar/profile-sidebar';
 
 interface Country {
   name: string;
@@ -15,7 +16,7 @@ interface Country {
   templateUrl: './addresses.html',
   styleUrls: ['./addresses.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ProfileSidebar],
   providers: [LocationService, AddressService]
 })
 export class Addresses implements OnInit {
