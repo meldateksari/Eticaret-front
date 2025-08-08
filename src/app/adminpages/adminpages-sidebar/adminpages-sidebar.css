@@ -1,0 +1,16 @@
+:host { display: block; }
+.sidebar { width: 240px; padding: 16px 12px; font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial; }
+.title { font-size: 16px; font-weight: 600; margin: 0 0 16px 4px; color: #0f172a; }
+
+.menu { list-style: none; padding: 0; margin: 0; display: grid; gap: 6px; }
+
+.menu a {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; padding: 8px 10px; border-radius: 8px;
+  color: #111827;           /* hepsi aynı renk */
+  background: transparent;  /* customers arkasında gri YOK */
+}
+.menu a svg { width: 20px; height: 20px; fill: currentColor; }
+
+.menu a:hover { color: #0f172a; }   /* sadece yazı rengi koyulaşsın */
+.menu a.is-active { font-weight: 600; } /* aktif route – arka plan yok */

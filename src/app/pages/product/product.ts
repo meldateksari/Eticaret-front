@@ -13,6 +13,7 @@ import {WishlistService} from '../../services/wishlist.service';
 import { ToastrModule } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
+import {CartComponent} from '../cart/cart';
 
 
 
@@ -23,7 +24,8 @@ import {Toast} from 'primeng/toast';
     CommonModule,
     FormsModule,
     Toast,
-    RouterLink
+    RouterLink,
+    CartComponent
   ],
   templateUrl: './product.html',
   styleUrl: './product.css',

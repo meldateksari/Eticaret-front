@@ -18,10 +18,23 @@ import {NewOrder} from './pages/new-order/new-order';
 import {ProductDetail} from './pages/product-detail/product-detail';
 import {Wishlist} from './pages/wishlist-page/wishlist-page';
 import {Reviews} from './pages/reviews/reviews';
+import {Support} from './pages/support/support';
+import {Dashboard} from './adminpages/dashboard/dashboard';
+import {ProductManage} from './adminpages/product-manage/product-manage';
+import {OrderManage} from './adminpages/order-manage/order-manage';
+import {ReviewManage} from './adminpages/review-manage/review-manage';
+import {UserService} from './services/user.service';
+import {UserManage} from './adminpages/user-manage/user-manage';
+import {AddProducts} from './adminpages/add-products/add-products';
+import {AddUsers} from './adminpages/add-users/add-users';
+import {EditProducts} from './adminpages/edit-products/edit-products';
+import {Faq} from './pages/faq/faq';
 
 
 
 export const routes: Routes = [
+
+  //USER
   { path: '', component: HomePage },
   { path: 'register', component: Register },
   { path: 'login', component: Login },
@@ -40,6 +53,21 @@ export const routes: Routes = [
   { path: 'new-order/:id', component: NewOrder},
   { path: 'product/:id', component: ProductDetail},
   { path: 'reviews', component: Reviews },
+  { path: 'support', component: Support },
+  { path: 'faq', component: Faq},
+
+  //ADMIN
+  { path: 'dashboard', component: Dashboard },
+  { path: 'product-manage', component: ProductManage },
+  { path: 'order-manage', component: OrderManage },
+  { path: 'review-manage', component: ReviewManage },
+  { path: 'user-manage', component: UserManage },
+  { path: 'add-products', component: AddProducts },
+  { path: 'edit-products', component: EditProducts },
+  { path: 'add-users', component: AddUsers},
+
+
+
 
 
 ];

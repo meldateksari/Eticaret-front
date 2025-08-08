@@ -1,0 +1,54 @@
+<div class="min-h-screen bg-[#fcf8f8] px-6 py-10">
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold text-[#1b0e0f] mb-4">"Support & Help</h1>
+    <p class="text-[#1b0e0f] leading-relaxed mb-6">
+      If you need assistance with your orders, returns, address management, or payments, you can find information here.
+    </p>
+
+    <section class="mb-8">
+      <h2 class="text-lg font-semibold text-[#1b0e0f] mb-4">Frequently Asked Questions</h2>
+
+      <div *ngFor="let faq of faqs; let i = index" class="border-b border-black/10">
+        <!-- Başlık -->
+        <button
+          (click)="toggleFAQ(i)"
+          class="flex w-full items-center justify-between py-4 text-left text-[#1b0e0f] font-medium hover:text-black transition-colors"
+        >
+          <span>{{ faq.question }}</span>
+          <svg
+            [class.rotate-180]="faq.open"
+            class="w-5 h-5 transition-transform duration-300"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Açıklama -->
+        <div
+          class="overflow-hidden transition-all duration-300"
+          [style.maxHeight]="faq.open ? '200px' : '0'"
+        >
+          <p class="pb-4 text-sm text-[#1b0e0f]">
+            {{ faq.answer }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="flex justify-start mt-8">
+      <a
+        [routerLink]="['']"
+        class="inline-flex items-center justify-center rounded-md border border-[#1b0e0f] px-5 h-10
+         text-sm font-medium tracking-wide text-[#1b0e0f] bg-transparent
+         hover:bg-[#1b0e0f] hover:text-white transition-colors"
+      >
+        Back to Home Page
+      </a>
+
+    </div>
+  </div>
+</div>

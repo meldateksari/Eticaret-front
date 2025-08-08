@@ -1,0 +1,95 @@
+<!-- ROW WRAPPER: sidebar + content -->
+<div class="flex min-h-screen bg-white">
+  <!-- Sidebar (zaten var) -->
+  <app-adminpages-sidebar class="shrink-0 w-80"></app-adminpages-sidebar>
+
+  <!-- Content -->
+  <main class="flex-1 min-w-0 flex flex-col">
+    <div class="flex flex-wrap justify-between gap-3 p-4">
+      <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Products</p>
+      <a
+        routerLink="/add-products"
+        class="btn-action primary-btn"
+      >
+        Add Product
+      </a>
+
+    </div>
+
+    <div class="px-4 py-3">
+      <label class="flex flex-col min-w-40 h-12 w-full">
+        <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+          <div
+            class="text-[#60778a] flex border-none bg-[#f0f2f5] items-center justify-center pl-4 rounded-l-lg border-r-0"
+            data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+            </svg>
+          </div>
+          <input
+            placeholder="Search products"
+            class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-full placeholder:text-[#60778a] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+            value=""
+          />
+        </div>
+      </label>
+    </div>
+
+    <!-- TABLE AREA is a container for @container queries -->
+    <div class="px-4 py-3 @container [container-type:inline-size]">
+      <div class="flex overflow-hidden rounded-lg border border-[#dbe1e6] bg-white">
+        <table class="flex-1">
+          <thead>
+          <tr class="bg-white">
+            <th class="table-col-56 px-4 py-3 text-left text-[#111518] w-14 text-sm font-medium leading-normal">Product</th>
+            <th class="table-col-176 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Name</th>
+            <th class="table-col-296 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Category</th>
+            <th class="table-col-416 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Price</th>
+            <th class="table-col-536 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Stock</th>
+            <th class="table-col-656 px-4 py-3 text-left text-[#111518] w-60 text-sm font-medium leading-normal">Status</th>
+            <th class="table-col-776 px-4 py-3 text-left text-[#111518] w-60 text-[#60778a] text-sm font-medium leading-normal">Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="border-t border-t-[#dbe1e6]">
+            <td class="table-col-56 h-[72px] px-4 py-2 w-14">
+              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
+                   style='background-image:url("https://lh3.googleusercontent.com/aida-public/AB6AXuDE53HCwDRuIYA8G7hxCRHkT1oNVHncz3ZCL9PDak7hHoYva_KsIF9Ep1J79BgJReHQv95jQiVsGIksEUmmY3_6yzm4bmIcNGj6_ACHQSCTTj5favkT8zNLYy92GeCMhhtJHoKqQ3iJ8nUyKMd0Q6iRVglr2OGA419jWJfSA1xld63pCD1j9IDrGY_oJysL57F7ZulO3jUodUQhSyEm6xj99f1cgLd8b64uw6qMjOfT_er9M1kzN8ZJMCGPfp7qRDO2I6Fg9xdN");'></div>
+            </td>
+            <td class="table-col-176 px-4 py-2 text-[#111518] text-sm">Slim Fit Jeans</td>
+            <td class="table-col-296 px-4 py-2 text-[#60778a] text-sm">Clothing</td>
+            <td class="table-col-416 px-4 py-2 text-[#60778a] text-sm">$49.99</td>
+            <td class="table-col-536 px-4 py-2 text-[#60778a] text-sm">150</td>
+            <td class="table-col-656 px-4 py-2">
+              <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">In Stock</button>
+            </td>
+            <td class="table-col-776 px-4 py-2">
+              <div class="action-buttons">
+                <a href="edit-products" class="btn-action edit-btn">
+                  Edit
+                </a>
+                <button class="btn-action delete-btn">
+                  Delete
+                </button>
+              </div>
+            </td>
+
+          </tr>
+          <!-- diğer satırlar… -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- container query ile kolon gizleme -->
+      <style>
+        @container(max-width:56px){.table-col-56{display:none}}
+        @container(max-width:176px){.table-col-176{display:none}}
+        @container(max-width:296px){.table-col-296{display:none}}
+        @container(max-width:416px){.table-col-416{display:none}}
+        @container(max-width:536px){.table-col-536{display:none}}
+        @container(max-width:656px){.table-col-656{display:none}}
+        @container(max-width:776px){.table-col-776{display:none}}
+      </style>
+    </div>
+  </main>
+</div>

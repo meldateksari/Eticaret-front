@@ -1,0 +1,45 @@
+<div class="layout-content-container flex flex-col w-80">
+  <div class="flex h-full min-h-[700px] flex-col justify-between bg-white p-4">
+    <div class="flex flex-col gap-4">
+      <h1 class="text-[#111518] text-2xl font-semibold tracking-wide uppercase border-b border-[#e5e7eb] pb-2">
+        Admin Panel
+      </h1>
+
+
+      <div class="flex flex-col gap-2">
+        <!-- Dashboard -->
+        <a class="flex items-center gap-3 px-3 py-2 text-[#111518]" [routerLink]="'/dashboard'" routerLinkActive="font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+            <path d="M218.83,103.77l-80-75.48a1.14,1.14,0,0,1-.11-.11,16,16,0,0,0-21.53,0l-.11.11L37.17,103.77A16,16,0,0,0,32,115.55V208a16,16,0,0,0,16,16H96a16,16,0,0,0,16-16V160h32v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V115.55A16,16,0,0,0,218.83,103.77ZM208,208H160V160a16,16,0,0,0-16-16H112a16,16,0,0,0-16,16v48H48V115.55l.11-.1L128,40l79.9,75.43.11.1Z"></path>
+          </svg>
+          <p class="text-sm font-medium leading-normal">Dashboard</p>
+        </a>
+
+        <!-- Orders -->
+        <a class="flex items-center gap-3 px-3 py-2 text-[#111518]" [routerLink]="'/order-manage'" routerLinkActive="font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+            <path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,32l80.34,44-29.77,16.3-80.35-44ZM128,120,47.66,76l33.9-18.56,80.34,44ZM40,90l80,43.78v85.79L40,175.82Zm176,85.78h0l-80,43.79V133.82l32-17.51V152a8,8,0,0,0,16,0V107.55L216,90v85.77Z"></path>
+          </svg>
+          <p class="text-sm font-medium leading-normal">Orders</p>
+        </a>
+
+        <!-- Products (arkada gri YOK) -->
+        <a class="flex items-center gap-3 px-3 py-2 text-[#111518]" [routerLink]="'/product-manage'" routerLinkActive="font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+            <path d="M236,69.4A16.13,16.13,0,0,0,223.92,64H176a48,48,0,0,0-96,0H32.08a16.13,16.13,0,0,0-12,5.4,16,16,0,0,0-3.92,12.48l14.26,120a16,16,0,0,0,16,14.12H209.67a16,16,0,0,0,16-14.12l14.26-120A16,16,0,0,0,236,69.4ZM96,104a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0Zm32-72a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm48,72a8,8,0,0,1-16,0V88a8,8,0,0,1,16,0Z"></path>
+          </svg>
+          <p class="text-sm font-medium leading-normal">Products</p>
+        </a>
+
+        <!-- Customers -->
+        <a class="flex items-center gap-3 px-3 py-2 text-[#111518]" [routerLink]="'/user-manage'" routerLinkActive="font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+            <path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"></path>
+          </svg>
+          <p class="text-sm font-medium leading-normal">Customers</p>
+        </a>
+
+      </div>
+    </div>
+  </div>
+</div>

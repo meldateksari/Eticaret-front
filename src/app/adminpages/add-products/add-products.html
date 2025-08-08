@@ -1,0 +1,125 @@
+<html>
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+  <link
+    rel="stylesheet"
+    as="style"
+    onload="this.rel='stylesheet'"
+    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Be+Vietnam+Pro%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
+  />
+
+  <title>Stitch Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+</head>
+<body>
+<!-- Back Button -->
+<button
+  routerLink="/product-manage"
+  class="flex items-center gap-2 rounded-lg bg-[#f0f2f5] px-4 py-2 text-[#111518] text-sm font-medium hover:bg-[#e0e3e7] transition"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+    <path d="M149.66,60.34a8,8,0,0,1,0,11.32L93.66,128l56,56a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72A8,8,0,0,1,149.66,60.34Z"></path>
+  </svg>
+  Back
+</button>
+
+
+<div
+  class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+>
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col w-[512px] max-w-[512px] py-5 max-w-[960px] flex-1">
+        <div class="flex flex-wrap justify-between gap-3 p-4">
+          <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">
+            Add <span class="text-red-500">New</span> Product
+          </p>
+
+        </div>
+
+        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+          <label class="flex flex-col min-w-40 flex-1">
+            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Product Name</p>
+            <input
+              placeholder="Enter product name"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-14 placeholder:text-[#60778a] p-4 text-base font-normal leading-normal"
+              value=""
+            />
+          </label>
+        </div>
+
+        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+          <label class="flex flex-col min-w-40 flex-1">
+            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Category</p>
+            <select
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-14 bg-[image:--select-button-svg] placeholder:text-[#60778a] p-4 text-base font-normal leading-normal"
+            >
+              <option value="one"></option>
+              <option value="two">two</option>
+              <option value="three">three</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+          <label class="flex flex-col min-w-40 flex-1">
+            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Price</p>
+            <input
+              placeholder="Enter price"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-14 placeholder:text-[#60778a] p-4 text-base font-normal leading-normal"
+              value=""
+            />
+          </label>
+        </div>
+
+        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+          <label class="flex flex-col min-w-40 flex-1">
+            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Stock</p>
+            <input
+              placeholder="Enter stock quantity"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-14 placeholder:text-[#60778a] p-4 text-base font-normal leading-normal"
+              value=""
+            />
+          </label>
+        </div>
+
+        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+          <label class="flex flex-col min-w-40 flex-1">
+            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Description</p>
+            <textarea
+              placeholder="Enter product description"
+              class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none min-h-36 placeholder:text-[#60778a] p-4 text-base font-normal leading-normal"
+            ></textarea>
+          </label>
+        </div>
+
+        <h3 class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Product Images</h3>
+
+        <div class="flex flex-col p-4">
+          <div class="flex flex-col items-center gap-6 rounded-lg border-2 border-dashed border-[#dbe1e6] px-6 py-14">
+            <div class="flex max-w-[480px] flex-col items-center gap-2">
+              <p class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em] max-w-[480px] text-center">Upload Images</p>
+              <p class="text-[#111518] text-sm font-normal leading-normal max-w-[480px] text-center">
+                Drag and drop images here, or click to select files
+              </p>
+            </div>
+            <button
+              class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-bold leading-normal tracking-[0.015em]"
+            >
+              <span class="truncate">Browse Files</span>
+            </button>
+          </div>
+        </div>
+        <div class="flex px-4 py-3 justify-end">
+          <button class="btn-action primary-btn">
+            <span class="truncate">Add Product</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
