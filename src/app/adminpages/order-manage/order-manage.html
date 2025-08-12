@@ -28,6 +28,8 @@
               <input
                 placeholder="Search orders by ID, customer, or product"
                 class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-full placeholder:text-[#60778a] px-4 rounded-l-none border-l-0 pl-2 text-base"
+                [(ngModel)]="searchTerm"
+                type="text"
               />
             </div>
           </label>
@@ -44,30 +46,82 @@
                 <th class="table-col-360 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium">Date</th>
                 <th class="table-col-480 px-4 py-3 text-left text-[#111518] w-60 text-sm font-medium">Status</th>
                 <th class="table-col-600 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium">Total</th>
+                <th class="table-col-660 px-4 py-3 text-left text-[#111518] w-[200px] text-sm font-medium">Actions</th>
               </tr>
               </thead>
               <tbody>
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="table-col-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm">#12345</td>
-                <td class="table-col-240 px-4 py-2 text-[#60778a] text-sm">Sophia Clark</td>
-                <td class="table-col-360 px-4 py-2 text-[#60778a] text-sm">2024-07-26</td>
-                <td class="table-col-480 px-4 py-2">
-                  <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">Shipped</button>
-                </td>
-                <td class="table-col-600 px-4 py-2 text-[#60778a] text-sm">$150.00</td>
+              <!-- Loading -->
+              <tr *ngIf="loading">
+                <td colspan="6" class="px-4 py-6 text-sm text-[#60778a]">Yükleniyor…</td>
               </tr>
 
-              <!-- aşağıdaki satırları senin örneklerinden kopyaladım -->
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="table-col-120 px-4 py-2 text-[#111518] text-sm">#12346</td>
-                <td class="table-col-240 px-4 py-2 text-[#60778a] text-sm">Liam Walker</td>
-                <td class="table-col-360 px-4 py-2 text-[#60778a] text-sm">2024-07-25</td>
-                <td class="table-col-480 px-4 py-2">
-                  <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">Processing</button>
-                </td>
-                <td class="table-col-600 px-4 py-2 text-[#60778a] text-sm">$200.00</td>
+              <!-- Hata -->
+              <tr *ngIf="!loading && error">
+                <td colspan="6" class="px-4 py-6 text-sm text-red-600">{{ error }}</td>
               </tr>
-              <!-- ... diğer örnek sipariş satırları ... -->
+
+              <!-- Sonuç Yok -->
+              <tr *ngIf="!loading && !error && filteredOrders.length === 0">
+                <td colspan="6" class="px-4 py-6 text-sm text-[#60778a]">Kriterlere uygun sipariş bulunamadı.</td>
+              </tr>
+
+              <!-- Kayıtlar -->
+              <tr
+                class="border-t border-t-[#dbe1e6]"
+                *ngFor="let order of filteredOrders; trackBy: trackById"
+              >
+                <td class="table-col-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm">
+                  #{{ order.id }}
+                </td>
+
+                <td class="table-col-240 px-4 py-2 text-[#60778a] text-sm">
+                  {{ getUserName(order.userId) }}
+                </td>
+
+                <td class="table-col-360 px-4 py-2 text-[#60778a] text-sm">
+                  {{ order.orderDate | date:'yyyy-MM-dd' }}
+                </td>
+
+                <td class="table-col-480 px-4 py-2">
+                  <button
+                    class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium"
+                    (click)="cycleStatus(order)"
+                    title="Durumu değiştir"
+                  >
+                    {{ statusLabels[order.status] || order.status }}
+                  </button>
+                </td>
+
+                <td class="table-col-600 px-4 py-2 text-[#60778a] text-sm">
+                  {{ formatCurrency(order.totalAmount) }}
+                </td>
+
+                <td class="table-col-660 px-4 py-2">
+                  <div class="flex gap-2">
+                    <button
+                      class="flex items-center justify-center rounded-lg h-8 px-3 bg-[#f0f2f5] text-[#111518] text-sm font-medium"
+                      (click)="cycleStatus(order)"
+                      title="Sıradaki statüye geçir"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" class="mr-1">
+                        <path d="M104,40a8,8,0,0,1,8,8V80h96a8,8,0,0,1,5.66,13.66l-32,32a8,8,0,1,1-11.32-11.32L184.69,96H112v32a8,8,0,0,1-13.66,5.66l-40-40A8,8,0,0,1,64,80H96V48A8,8,0,0,1,104,40Z"></path>
+                      </svg>
+                      Next
+                    </button>
+
+                    <button
+                      class="flex items-center justify-center rounded-lg h-8 px-3 bg-[#fde7e7] text-[#b42318] text-sm font-medium"
+                      (click)="deleteOrder(order)"
+                      title="Sil"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" class="mr-1">
+                        <path d="M216,56H168V48a24,24,0,0,0-24-24H112A24,24,0,0,0,88,48v8H40a8,8,0,0,0,0,16h8V208a24,24,0,0,0,24,24H184a24,24,0,0,0,24-24V72h8a8,8,0,0,0,0-16ZM104,48a8,8,0,0,1,8-8h32a8,8,0,0,1,8,8v8H104Zm88,160a8,8,0,0,1-8,8H72a8,8,0,0,1-8-8V72H192Z"></path>
+                      </svg>
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
               </tbody>
             </table>
           </div>
@@ -79,6 +133,7 @@
             @container(max-width:360px){.table-col-360{display:none}}
             @container(max-width:480px){.table-col-480{display:none}}
             @container(max-width:600px){.table-col-600{display:none}}
+            @container(max-width:660px){.table-col-660{display:none}}
           </style>
         </div>
 

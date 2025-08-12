@@ -1,21 +1,18 @@
 <!-- ROW WRAPPER: sidebar + content -->
 <div class="flex min-h-screen bg-white">
-  <!-- Sidebar (zaten var) -->
+  <!-- Sidebar -->
   <app-adminpages-sidebar class="shrink-0 w-80"></app-adminpages-sidebar>
 
   <!-- Content -->
   <main class="flex-1 min-w-0 flex flex-col">
     <div class="flex flex-wrap justify-between gap-3 p-4">
       <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Products</p>
-      <a
-        routerLink="/add-products"
-        class="btn-action primary-btn"
-      >
+      <a routerLink="/add-products" class="btn-action primary-btn">
         Add Product
       </a>
-
     </div>
 
+    <!-- Search -->
     <div class="px-4 py-3">
       <label class="flex flex-col min-w-40 h-12 w-full">
         <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
@@ -29,14 +26,19 @@
           <input
             placeholder="Search products"
             class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-full placeholder:text-[#60778a] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-            value=""
+            [ngModel]="searchTerm()"
+            (ngModelChange)="searchTerm.set($event)"
           />
         </div>
       </label>
     </div>
 
-    <!-- TABLE AREA is a container for @container queries -->
-    <div class="px-4 py-3 @container [container-type:inline-size]">
+    <!-- Loading / Error -->
+    <div class="px-4" *ngIf="loading">Yükleniyor…</div>
+    <div class="px-4 text-red-600" *ngIf="!loading && error">{{ error }}</div>
+
+    <!-- TABLE AREA -->
+    <div class="px-4 py-3 @container [container-type:inline-size]" *ngIf="!loading && !error">
       <div class="flex overflow-hidden rounded-lg border border-[#dbe1e6] bg-white">
         <table class="flex-1">
           <thead>
@@ -51,31 +53,48 @@
           </tr>
           </thead>
           <tbody>
-          <tr class="border-t border-t-[#dbe1e6]">
+          <tr class="border-t border-t-[#dbe1e6]" *ngFor="let p of filteredProducts()">
             <td class="table-col-56 h-[72px] px-4 py-2 w-14">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                   style='background-image:url("https://lh3.googleusercontent.com/aida-public/AB6AXuDE53HCwDRuIYA8G7hxCRHkT1oNVHncz3ZCL9PDak7hHoYva_KsIF9Ep1J79BgJReHQv95jQiVsGIksEUmmY3_6yzm4bmIcNGj6_ACHQSCTTj5favkT8zNLYy92GeCMhhtJHoKqQ3iJ8nUyKMd0Q6iRVglr2OGA419jWJfSA1xld63pCD1j9IDrGY_oJysL57F7ZulO3jUodUQhSyEm6xj99f1cgLd8b64uw6qMjOfT_er9M1kzN8ZJMCGPfp7qRDO2I6Fg9xdN");'></div>
+              <div
+                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
+                [style.background-image]="imageFor(p) ? 'url(' + imageFor(p) + ')' : 'url(https://via.placeholder.com/80)'">
+              </div>
             </td>
-            <td class="table-col-176 px-4 py-2 text-[#111518] text-sm">Slim Fit Jeans</td>
-            <td class="table-col-296 px-4 py-2 text-[#60778a] text-sm">Clothing</td>
-            <td class="table-col-416 px-4 py-2 text-[#60778a] text-sm">$49.99</td>
-            <td class="table-col-536 px-4 py-2 text-[#60778a] text-sm">150</td>
+            <td class="table-col-176 px-4 py-2 text-[#111518] text-sm">
+              {{ p.name }}
+              <div class="text-xs text-[#60778a]" *ngIf="p.brand">{{ p.brand }}</div>
+            </td>
+            <td class="table-col-296 px-4 py-2 text-[#60778a] text-sm">
+              {{ p.category?.name || '-' }}
+            </td>
+            <td class="table-col-416 px-4 py-2 text-[#60778a] text-sm">
+              {{ p.price | currency:'USD':'symbol':'1.0-2' }}
+            </td>
+            <td class="table-col-536 px-4 py-2 text-[#60778a] text-sm">
+              {{ p.stockQuantity ?? 0 }}
+            </td>
             <td class="table-col-656 px-4 py-2">
-              <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">In Stock</button>
+              <button
+                class="flex w-full items-center justify-center rounded-lg h-8 px-4 text-sm font-medium"
+                [ngClass]="inStock(p) ? 'bg-[#f0f2f5] text-[#111518]' : 'bg-[#ffe5e5] text-[#a00000]'">
+                {{ inStock(p) ? 'In Stock' : 'Out of Stock' }}
+              </button>
             </td>
             <td class="table-col-776 px-4 py-2">
               <div class="action-buttons">
-                <a href="edit-products" class="btn-action edit-btn">
+                <a (click)="gotoEdit(p)" class="btn-action edit-btn" style="cursor:pointer">
                   Edit
                 </a>
-                <button class="btn-action delete-btn">
+                <button class="btn-action delete-btn" (click)="onDelete(p)">
                   Delete
                 </button>
               </div>
             </td>
-
           </tr>
-          <!-- diğer satırlar… -->
+
+          <tr *ngIf="filteredProducts().length === 0">
+            <td colspan="7" class="px-4 py-6 text-center text-[#60778a]">Kriterlere uygun ürün bulunamadı.</td>
+          </tr>
           </tbody>
         </table>
       </div>

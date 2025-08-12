@@ -172,8 +172,9 @@ export class Payments implements OnInit {
   }
 
   async updatePayment() {
-    const order = await lastValueFrom(this.orderService.updateOrder(this.orderId, "PAID"));
+    await lastValueFrom(this.orderService.updatePaymentStatus(this.orderId, 'PAID'));
   }
+
   fillFormFromCard(card: CreditCard) {
     this.paymentForm.setValue({
       cardNumber: card.cardNumber,

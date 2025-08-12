@@ -1,117 +1,157 @@
-<html>
-<head>
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-  <link
-    rel="stylesheet"
-    as="style"
-    onload="this.rel='stylesheet'"
-    href="https://fonts.googleapis.com/css2?display=swap&amp;family=Be+Vietnam+Pro%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900"
-  />
-  <title>Stitch Design</title>
-  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-</head>
-<body>
 <!-- Back Button -->
 <button
   routerLink="/product-manage"
-  class="flex items-center gap-2 rounded-lg bg-[#f0f2f5] px-4 py-2 text-[#111518] text-sm font-medium hover:bg-[#e0e3e7] transition"
->
+  class="flex items-center gap-2 rounded-lg bg-[#f0f2f5] px-4 py-2 text-[#111518] text-sm font-medium hover:bg-[#e0e3e7] transition">
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
     <path d="M149.66,60.34a8,8,0,0,1,0,11.32L93.66,128l56,56a8,8,0,0,1-11.32,11.32l-72-72a8,8,0,0,1,0-11.32l72-72A8,8,0,0,1,149.66,60.34Z"></path>
   </svg>
   Back
 </button>
 
-<div
-  class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
+<div class="relative flex size-full min-h-screen flex-col bg-white overflow-x-hidden">
   <div class="layout-container flex h-full grow flex-col">
     <div class="px-40 flex flex-1 justify-center py-5">
       <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+
         <div class="flex flex-wrap justify-between gap-3 p-4">
           <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Edit Product Details</p>
         </div>
-        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label class="flex flex-col min-w-40 flex-1">
-            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Product Name</p>
-            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 placeholder:text-[#60778a] p-4 text-base font-normal" />
-          </label>
-        </div>
-        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label class="flex flex-col min-w-40 flex-1">
-            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Category</p>
-            <select class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 bg-[image:--select-button-svg] placeholder:text-[#60778a] p-4 text-base font-normal">
-              <option value="one"></option>
-              <option value="two">two</option>
-              <option value="three">three</option>
-            </select>
-          </label>
-        </div>
-        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label class="flex flex-col min-w-40 flex-1">
-            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Price</p>
-            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 placeholder:text-[#60778a] p-4 text-base font-normal" />
-          </label>
-        </div>
-        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label class="flex flex-col min-w-40 flex-1">
-            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Stock</p>
-            <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 placeholder:text-[#60778a] p-4 text-base font-normal" />
-          </label>
-        </div>
-        <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
-          <label class="flex flex-col min-w-40 flex-1">
-            <p class="text-[#111518] text-base font-medium leading-normal pb-2">Description</p>
-            <textarea class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] min-h-36 placeholder:text-[#60778a] p-4 text-base font-normal"></textarea>
-          </label>
-        </div>
-        <h3 class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Product Images</h3>
-        <div class="flex w-full grow bg-white @container p-4">
-          <div class="w-full gap-1 overflow-hidden bg-white @[480px]:gap-2 aspect-[3/2] rounded-lg flex">
-            <div class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDonB2l3tcOBtkT0s6aTn_McLov5FBmmHj6CfO8GSWpGJvA4F0uXwPk5Jo-IIYnuY_HOH1eHEX__iI7LVGX-Jq4MUF88hR-_w-aYU8eX0inUyUdVGS8GlVOOBbfUiSKssz8Y0DotzQSxKpRfmdndPyWRZJeMlGOjZKFxtl5wXpYHqmSFnPFA9NbeJwgWd9CbVCzimsSlcq3qNfAr1ejVZgcbtCO5WuPPq9ILg7rAYaHIJ17fxyElWl7RjtklHHxl0C7hQxnq-dg");'></div>
+
+        <!-- Loading / Error -->
+        <div class="px-4" *ngIf="loading">Yükleniyor…</div>
+        <div class="px-4 text-red-600" *ngIf="!loading && error">{{ error }}</div>
+
+        <form class="contents" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="!loading">
+
+          <!-- Name -->
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Product Name</p>
+              <input formControlName="name" placeholder="Product name"
+                     class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 p-4" />
+              <small class="text-red-600 mt-1" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+                Lütfen en az 2 karakter girin.
+              </small>
+            </label>
           </div>
-        </div>
-        <h3 class="text-[#111518] text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-2 pt-4">Product Variations</h3>
-        <div class="px-4 py-3 @container">
-          <div class="flex overflow-hidden rounded-lg border border-[#dbe1e6] bg-white">
-            <table class="flex-1">
-              <thead>
-              <tr class="bg-white">
-                <th class="px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium">Color</th>
-                <th class="px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium">Size</th>
-                <th class="px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium">Price</th>
-                <th class="px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium">Stock</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">Blue</td>
-                <td class="h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">S</td>
-                <td class="h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">$79.99</td>
-                <td class="h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">20</td>
-              </tr>
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">Black</td>
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">M</td>
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">$84.99</td>
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">15</td>
-              </tr>
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">Gray</td>
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">L</td>
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">$89.99</td>
-                <td class="h-[72px] px-4 py-2 text-[#60778a] text-sm">10</td>
-              </tr>
-              </tbody>
-            </table>
+
+          <!-- Category -->
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Category</p>
+              <select formControlName="categoryId"
+                      class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 p-4">
+                <option [ngValue]="null">Seçiniz…</option>
+                <option *ngFor="let c of categories" [ngValue]="c.id">{{ c.name }}</option>
+              </select>
+            </label>
           </div>
-        </div>
-        <div class="flex px-4 py-3 justify-end">
-          <button class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-[#2094f3] text-white text-sm font-bold">Update Product</button>
-        </div>
+
+          <!-- Gender Categories (multi) -->
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3" *ngIf="genderCategories?.length">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Gender Categories</p>
+              <select multiple formControlName="genderCategoryIds"
+                      class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] min-h-14 p-4">
+                <option *ngFor="let g of genderCategories" [ngValue]="g.id">{{ g.name }}</option>
+              </select>
+              <small class="text-[#60778a] mt-1">Ctrl/Cmd ile çoklu seçim yapabilirsiniz.</small>
+            </label>
+          </div>
+
+          <!-- Price -->
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Price</p>
+              <input type="number" formControlName="price" placeholder="0"
+                     class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 p-4" />
+            </label>
+          </div>
+
+          <!-- Stock -->
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Stock</p>
+              <input type="number" formControlName="stockQuantity" placeholder="0"
+                     class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 p-4" />
+            </label>
+          </div>
+
+          <!-- Brand -->
+          <div class="flex max-w-[480px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Brand</p>
+              <input formControlName="brand" placeholder="Brand"
+                     class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-14 p-4" />
+            </label>
+          </div>
+
+          <!-- isActive -->
+          <div class="flex max-w-[480px] items-center gap-3 px-4 py-3">
+            <input id="isActive" type="checkbox" formControlName="isActive" class="rounded border-gray-300">
+            <label for="isActive" class="text-[#111518] text-base">Active</label>
+          </div>
+
+          <!-- Description -->
+          <div class="flex max-w-[720px] flex-wrap items-end gap-4 px-4 py-3">
+            <label class="flex flex-col min-w-40 flex-1">
+              <p class="text-[#111518] text-base font-medium leading-normal pb-2">Description</p>
+              <textarea formControlName="description"
+                        class="form-input flex w-full min-w-0 flex-1 rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] min-h-36 p-4"></textarea>
+            </label>
+          </div>
+
+          <!-- Product Images -->
+          <h3 class="text-[#111518] text-lg font-bold tracking-[-0.015em] px-4 pb-2 pt-4">Product Images</h3>
+
+          <div class="px-4 py-2">
+            <div class="flex gap-3 items-center flex-wrap">
+              <label class="cursor-pointer">
+                <input type="file" accept="image/*" class="hidden" (change)="onMainImageFileSelected($event)">
+                <span class="rounded-lg bg-[#f0f2f5] px-4 py-2 text-sm font-medium hover:bg-[#e0e3e7]">Dosyadan Seç</span>
+              </label>
+
+              <div class="flex items-center gap-2">
+                <input [(ngModel)]="imageUrlInput" [ngModelOptions]="{standalone:true}" name="imageUrlInput"
+                       placeholder="https://... (veya data:image/...;base64,...)"
+                       class="form-input flex w-[360px] rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-10 p-3" />
+                <button type="button" (click)="applyImageUrlFromInput()"
+                        class="rounded-lg bg-[#f0f2f5] px-3 py-2 text-sm hover:bg-[#e0e3e7]">URL Kullan</button>
+              </div>
+
+              <button type="button" (click)="removeMainImage()"
+                      class="rounded-lg bg-[#ffe5e5] px-3 py-2 text-sm text-[#a00000] hover:bg-[#ffd6d6]">
+                Görseli Kaldır
+              </button>
+            </div>
+          </div>
+
+          <!-- Önizleme -->
+          <div class="flex w-full grow bg-white @container p-4" *ngIf="mainImageUrl || images.length; else noImg">
+            <div class="w-full gap-2 overflow-hidden bg-white aspect-[3/2] rounded-lg flex">
+              <div *ngIf="mainImageUrl"
+                   class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1"
+                   [style.background-image]="'url(' + mainImageUrl + ')'"></div>
+
+              <div *ngFor="let img of images"
+                   class="w-full bg-center bg-no-repeat bg-cover aspect-auto rounded-none flex-1"
+                   [style.background-image]="'url(' + img.imageUrl + ')'"></div>
+            </div>
+          </div>
+          <ng-template #noImg>
+            <div class="px-4 text-[#60778a]">Bu ürüne ait görsel bulunamadı.</div>
+          </ng-template>
+
+          <!-- Submit -->
+          <div class="flex px-4 py-3 justify-end">
+            <button class="flex min-w-[140px] items-center justify-center rounded-lg h-10 px-4 bg-[#2094f3] text-white text-sm font-bold disabled:opacity-60"
+                    type="submit" [disabled]="form.invalid || saving">
+              {{ saving ? 'Updating…' : 'Update Product' }}
+            </button>
+          </div>
+        </form>
+
       </div>
     </div>
   </div>
 </div>
-</body>
-</html>

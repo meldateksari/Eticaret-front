@@ -1,5 +1,5 @@
 <div class="max-w-md mx-auto mt-10 p-6 bg-[#fcf8f8] shadow rounded">
-  <h2 class="text-xl font-bold text-[#1b0e0f] mb-6">Mock Payment Form</h2>
+  <h2 class="text-xl font-bold text-[#1b0e0f] mb-6">Payment Form</h2>
 
   <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
     <!-- Card Number -->
@@ -90,7 +90,7 @@
 
   <!-- Info -->
   <p class="text-center text-sm text-[#974e52] mt-4">
-    This is a fake form. No data is saved or processed.
+
   </p>
   <!-- Saved Cards -->
   <div *ngIf="savedCards.length > 0" class="mt-8">

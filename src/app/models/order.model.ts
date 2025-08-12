@@ -1,8 +1,10 @@
+import {OrderStatus} from './order-status.enum';
+
 export interface Order {
   id: number;
   orderDate: string;
   totalAmount: number;
-  status: string;
+  status: OrderStatus;
   userId: number;
   shippingAddressId: number;
   billingAddressId: number;

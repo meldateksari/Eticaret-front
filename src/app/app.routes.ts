@@ -63,7 +63,7 @@ export const routes: Routes = [
   { path: 'review-manage', component: ReviewManage },
   { path: 'user-manage', component: UserManage },
   { path: 'add-products', component: AddProducts },
-  { path: 'edit-products', component: EditProducts },
+  { path: 'edit-products/:id', component: EditProducts },
   { path: 'add-users', component: AddUsers},
 
 

@@ -28,10 +28,19 @@ export class ProductService {
     return this.http.get(`${this.baseUrl}/${id}`);
   }
 
+  createProduct(payload: any): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl, payload);
+  }
+  updateProduct(id: number, payload: Partial<Product> | any): Observable<Product> {
+    return this.http.put<Product>(`${this.baseUrl}/${id}`, payload);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
   getLatestProducts(): Observable<Product[]> {
-    return this.getAll().pipe(
-      map(products => [...products].slice(-3).reverse()) // son 3 ürünü al
-    );
+    return this.http.get<Product[]>(`${this.baseUrl}/latest`);
   }
 
 }

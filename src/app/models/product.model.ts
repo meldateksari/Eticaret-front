@@ -1,5 +1,6 @@
 // src/app/models/product.model.ts
 import { Category } from './category.model';
+import {ProductImage} from './product-image.model';
 
 export interface Product {
   id: number;
@@ -14,10 +15,9 @@ export interface Product {
   isActive: boolean;
   createdAt?: string | null;
   updatedAt?: string | null;
-  size?: string;
 
 
   category: Category;
   genderCategories: Category[];
-  images: string[];
+  images: ProductImage[];
 }
