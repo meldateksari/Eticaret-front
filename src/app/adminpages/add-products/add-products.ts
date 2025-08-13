@@ -12,7 +12,7 @@ import { ProductImageService } from '../../services/product-image.service';
 
 // basit tipler
 type Category = { id: number; name?: string };
-type ImgItem = { file?: File; previewUrl: string; isUrl?: boolean };
+type ImgItem = { file?: File; previewUrl: string; isUrl?: boolean, base64?: string };
 
 @Component({
   selector: 'app-add-products',
@@ -95,11 +95,16 @@ export class AddProducts implements OnInit {
     const files = Array.from(input.files);
     for (const f of files) {
       const reader = new FileReader();
+
       reader.onload = () => {
-        this.images.push({ file: f, previewUrl: reader.result as string });
+        const result = reader.result as string;
+        const base64 = result.split(',')[1];
+        this.images.push({ file: f, previewUrl: reader.result as string, base64 });
         if (this.thumbnailIndex === null) this.thumbnailIndex = 0;
       };
       reader.readAsDataURL(f);
+
+      // console.log("byte" , base64)
     }
     input.value = '';
   }
@@ -193,7 +198,8 @@ export class AddProducts implements OnInit {
             imageUrl: img.previewUrl,                 // URL ya da dataURL
             isThumbnail: this.thumbnailIndex === idx,
             sortOrder: idx,
-            product: { id: productId }
+            product: { id: productId },
+            image: this.base64ToByteArray(img.base64)
           })
         );
         console.log('Posting images...', calls.length);
@@ -213,5 +219,15 @@ export class AddProducts implements OnInit {
     } finally {
       this.submitting = false;
     }
+  }
+
+  base64ToByteArray(base64: string): number[] {
+    const binaryString = atob(base64);
+    const len = binaryString.length;
+    const bytes = new Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes;
   }
 }

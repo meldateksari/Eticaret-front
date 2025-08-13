@@ -14,6 +14,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
 import {CartComponent} from '../cart/cart';
+import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 
 
 
@@ -42,6 +43,9 @@ export class Product implements OnInit {
   selectedGenderIds: number[] = [];
   selectedCategoryId: number | null = null;
   activeOnly: boolean = false;
+  searchTerm = '';
+  private search$ = new Subject<string>();
+  filteredCount: number | null = null;
 
   constructor(
     private productService: ProductService,
@@ -56,9 +60,12 @@ export class Product implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const categoryId = params['categoryId'];
-      if (categoryId) {
-        this.selectedCategoryId = +categoryId;
-      }
+      if (categoryId) this.selectedCategoryId = +categoryId;
+
+      // aramayı 300ms debounce ile dinle
+      this.search$
+        .pipe(debounceTime(300), distinctUntilChanged())
+        .subscribe(() => this.loadProducts());
 
       this.loadGenderCategories();
       this.loadCategories();
@@ -66,13 +73,17 @@ export class Product implements OnInit {
     });
   }
 
-  loadProducts(): void {
-    console.log('API\'den ürünler isteniyor. Filtreler:', {
-      genderIds: this.selectedGenderIds,
-      categoryId: this.selectedCategoryId,
-      activeOnly: this.activeOnly
-    });
+  onSearch(term: string) {
+    this.searchTerm = term ?? '';
+    this.loadProducts(); // istersen sadece applySearch() de diyebilirsin, ama diğer filtrelerle tutarlı olsun
+  }
 
+  clearSearch() {
+    this.searchTerm = '';
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
     const genderIds = this.selectedGenderIds.length > 0 ? this.selectedGenderIds : undefined;
 
     this.productService.getAll(
@@ -81,14 +92,34 @@ export class Product implements OnInit {
       this.activeOnly ? true : undefined
     ).subscribe({
       next: (data) => {
-        this.products = data;
-        console.log('Filtrelenmiş ürünler yüklendi:', this.products);
+        let list = data.map(p => ({
+          ...p,
+          imageUrl: p.imageUrl
+            ?? p.images?.find((i: any) => i.isThumbnail)?.imageUrl
+            ?? p.images?.[0]?.imageUrl
+            ?? null
+        }));
+
+        // 🔎 FRONTEND ARAMA FİLTRESİ (case-insensitive)
+        const q = this.searchTerm.trim().toLowerCase();
+        if (q) {
+          list = list.filter(p =>
+            [
+              p.name,
+              (p as any).brand,
+              p.category?.name
+            ]
+              .filter(Boolean)
+              .some(v => String(v).toLowerCase().includes(q))
+          );
+        }
+
+        this.products = list;
       },
-      error: (err: HttpErrorResponse) => {
-        console.error('Ürünler yüklenirken hata oluştu:', err);
-      }
+      error: (err) => console.error('Ürünler yüklenirken hata oluştu:', err)
     });
   }
+
 
   loadGenderCategories(): void {
     this.categoryService.getGenderCategories().subscribe({

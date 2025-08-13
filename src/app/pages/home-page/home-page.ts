@@ -47,8 +47,21 @@ export class HomePage implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.productService.getAll().subscribe(data => {
-      this.allProducts = data;
-      this.latestProducts = [...data].slice(-5).reverse();
+      const normalized = (data ?? []).map(p => ({
+        ...p,
+        imageUrl:
+          p.imageUrl
+          ?? p.images?.find((i: any) => i.isThumbnail)?.imageUrl
+          ?? p.images?.[0]?.imageUrl
+
+      }));
+
+      this.allProducts = normalized;
+
+
+      this.latestProducts = [...this.allProducts]
+        .sort((a, b) => new Date(b.createdAt!).getTime() - new Date(a.createdAt!).getTime())
+        .slice(0, 5);
     });
 
     this.loadCategories();

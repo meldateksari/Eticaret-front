@@ -3,6 +3,16 @@
 <div class="custom-container">
   <!-- Sidebar for filters -->
   <div class="sidebar">
+    <!-- Search bar -->
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (input)="onSearch($event.target.value)"
+        placeholder="Ara: ürün adı / marka..."
+      />
+      <button *ngIf="searchTerm" class="clear" (click)="clearSearch()">✕</button>
+    </div>
     <!-- Cinsiyet Filtresi -->
     <div class="filter-section">
       <h3>Gender Filter</h3>
@@ -47,12 +57,19 @@
           <label for="activeOnly">Active Products Only</label>
         </div>
       </div>
+
+
     </div>
   </div>
 
+
+
   <!-- Ürün Grid Alanı -->
   <div class="product-grid">
+
     <div class="product-card" *ngFor="let product of products">
+
+
       <!-- Favori Butonu -->
       <button class="favorite-icon" (click)="addProductToWishlist(product)">
 

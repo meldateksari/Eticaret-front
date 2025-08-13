@@ -1,6 +1,7 @@
+<!-- user-manage.html -->
 <div class="flex min-h-screen bg-white" style='font-family: "Be Vietnam Pro", "Noto Sans", sans-serif;'>
 
-  <!-- SOL: Gerçek sidebar -->
+  <!-- SOL: Sidebar -->
   <app-adminpages-sidebar class="shrink-0 w-80 border-r border-[#f0f2f5]"></app-adminpages-sidebar>
 
   <!-- SAĞ: İçerik -->
@@ -10,11 +11,12 @@
 
         <div class="flex flex-wrap justify-between gap-3 p-4">
           <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Customers</p>
+
           <button
+            (click)="goToAddUsers()"
             class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium leading-normal"
-            onclick="window.location.href='add-users';"
           >
-            <span class="truncate">Add Customer</span>
+            Add Users
           </button>
 
         </div>
@@ -23,69 +25,100 @@
           <label class="flex flex-col min-w-40 h-12 w-full">
             <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
               <div
-                class="text-[#60778a] flex border-none bg-[#f0f2f5] items-center justify-center pl-4 rounded-l-lg border-r-0"
-                data-icon="MagnifyingGlass" data-size="24px" data-weight="regular">
+                class="text-[#60778a] flex border-none bg-[#f0f2f5] items-center justify-center pl-4 rounded-l-lg border-r-0">
+                <!-- icon -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
                   <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
                 </svg>
               </div>
               <input
                 placeholder="Search customers"
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] focus:border-none h-full placeholder:text-[#60778a] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
-                value=""
+                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111518] focus:outline-0 focus:ring-0 border-none bg-[#f0f2f5] h-full placeholder:text-[#60778a] px-4 rounded-l-none border-l-0 pl-2 text-base"
+                [(ngModel)]="search"
               />
             </div>
           </label>
         </div>
 
-        <!-- Tablo container: @container kuralları için -->
         <div class="px-4 py-3 @container [container-type:inline-size]">
-          <div class="flex overflow-hidden rounded-lg border border-[#dbe1e6] bg-white">
-            <table class="flex-1">
+
+          <div *ngIf="loading" class="p-4 text-sm text-[#60778a]">Yükleniyor...</div>
+          <div *ngIf="error" class="p-4 text-sm text-red-600">{{ error }}</div>
+
+          <div class="flex overflow-hidden rounded-lg border border-[#dbe1e6] bg-white" *ngIf="!loading && !error">
+            <table class="flex-1 w-full">
               <thead>
               <tr class="bg-white">
                 <th class="table-col-120 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Name</th>
                 <th class="table-col-240 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Email</th>
                 <th class="table-col-360 px-4 py-3 text-left text-[#111518] w-[400px] text-sm font-medium leading-normal">Phone</th>
                 <th class="table-col-480 px-4 py-3 text-left text-[#111518] w-60 text-sm font-medium leading-normal">Status</th>
-
+                <th class="table-col-600 px-4 py-3 text-left text-[#111518] w-60 text-sm font-medium leading-normal">Role</th>
+                <th class="px-4 py-3 text-left text-[#111518] w-60 text-sm font-medium leading-normal">Actions</th>
               </tr>
               </thead>
+
               <tbody>
-              <!-- 1 -->
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="table-col-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm">Sophia Clark</td>
-                <td class="table-col-240 h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">sophia.clark@example.com</td>
-                <td class="table-col-360 h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">+1-555-123-4567</td>
+              <tr class="border-t border-t-[#dbe1e6]"
+                  *ngFor="let u of filteredUsers; trackBy: trackById">
+
+                <td class="table-col-120 h-[72px] px-4 py-2 w-[400px] text-[#111518] text-sm">
+                  {{ u.firstName }} {{ u.lastName }}
+                </td>
+
+                <td class="table-col-240 h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">
+                  {{ u.email }}
+                </td>
+
+                <td class="table-col-360 h-[72px] px-4 py-2 w-[400px] text-[#60778a] text-sm">
+                  {{ u.phoneNumber || '—' }}
+                </td>
+
                 <td class="table-col-480 h-[72px] px-4 py-2 w-60 text-sm">
-                  <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">Active</button>
+                  <button
+                    class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium"
+                    [disabled]="savingUserIds.has(u.id!)"
+                    (click)="toggleActive(u)">
+                    {{ u.isActive ? 'Active' : 'Inactive' }}
+                  </button>
+                </td>
+
+                <td class="table-col-600 h-[72px] px-4 py-2 w-60 text-sm">
+                  <div class="flex gap-2">
+                    <!-- user-manage.html -->
+                    <select
+                      class="rounded-lg bg-[#f0f2f5] px-3 h-8 text-sm"
+                      [(ngModel)]="roleDraft[u.id!]">
+                      <option [ngValue]="'ROLE_USER'">ROLE_USER</option>
+                      <option [ngValue]="'ROLE_ADMIN'">ROLE_ADMIN</option>
+                    </select>
+
+                    <button
+                      type="button"
+                      class="rounded-lg h-8 px-3 bg-[#f0f2f5] text-[#111518] text-sm font-medium"
+                      [disabled]="savingUserIds.has(u.id!)"
+                      (click)="assignRole(u)">
+                      Assign
+                    </button>
+
+                  </div>
+                </td>
+
+                <td class="h-[72px] px-4 py-2 w-60 text-sm">
+                  <button
+                    class="rounded-lg h-8 px-3 bg-[#fef2f2] text-[#b91c1c] text-sm font-medium"
+                    [disabled]="savingUserIds.has(u.id!)"
+                    (click)="delete(u)">
+                    Delete
+                  </button>
                 </td>
 
               </tr>
-              <!-- 2 -->
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="table-col-120 px-4 py-2 text-[#111518] text-sm">Liam Walker</td>
-                <td class="table-col-240 px-4 py-2 text-[#60778a] text-sm">liam.walker@example.com</td>
-                <td class="table-col-360 px-4 py-2 text-[#60778a] text-sm">+1-555-987-6543</td>
-                <td class="table-col-480 px-4 py-2">
-                  <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">Inactive</button>
-                </td>
-              </tr>
-              <!-- 3 -->
-              <tr class="border-t border-t-[#dbe1e6]">
-                <td class="table-col-120 px-4 py-2 text-[#111518] text-sm">Olivia Carter</td>
-                <td class="table-col-240 px-4 py-2 text-[#60778a] text-sm">olivia.carter@example.com</td>
-                <td class="table-col-360 px-4 py-2 text-[#60778a] text-sm">+1-555-246-8013</td>
-                <td class="table-col-480 px-4 py-2">
-                  <button class="flex w-full items-center justify-center rounded-lg h-8 px-4 bg-[#f0f2f5] text-[#111518] text-sm font-medium">Active</button>
-                </td>
-              </tr>
-              <!-- Devamı aynı formatta -->
               </tbody>
             </table>
           </div>
 
-          <!-- container query ile kolon gizleme -->
+          <!-- container queries -->
           <style>
             @container(max-width:120px){.table-col-120{display:none}}
             @container(max-width:240px){.table-col-240{display:none}}

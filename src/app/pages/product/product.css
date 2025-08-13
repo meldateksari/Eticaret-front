@@ -431,3 +431,31 @@ html, body {
   border: 1px solid #ddd; /* biraz daha soft sınır */
   border-radius: 8px;
 }
+
+/* product.css */
+.search-bar {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  margin-top: 5px;
+}
+.search-bar input {
+  flex: 1;
+  padding: .6rem .8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+}
+.search-bar .clear {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.result-info {
+  margin: .25rem 0 1rem;
+  font-size: .9rem;
+  color: #666;
+}
+

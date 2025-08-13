@@ -11,13 +11,14 @@ import { WishlistService } from '../../services/wishlist.service';
 import { MessageService } from 'primeng/api';
 import {Toast} from 'primeng/toast';
 import {CartService} from '../../services/cart.service';
+import {ProductService} from '../../services/product.service';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
   imports: [CommonModule, RecommendedProducts, Reviews, Toast,],
   templateUrl: './product-detail.html',
-  providers: [ProductInteractionService,ProductInteractionService,WishlistService, MessageService,CartService]
+  providers: [ProductInteractionService,WishlistService, MessageService,CartService, ProductService]
 })
 export class ProductDetail implements OnInit {
   currentUser: number;
@@ -30,6 +31,7 @@ export class ProductDetail implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private productService: ProductService,
     private productInteractionService: ProductInteractionService,
     private reviewService: ReviewService,
     private wishlistService: WishlistService,
@@ -42,16 +44,28 @@ export class ProductDetail implements OnInit {
     const productId = Number(this.route.snapshot.paramMap.get('id'));
     this.currentUser = Number(localStorage.getItem("userId"));
 
-    this.productInteractionService.getProductInteraction(productId)
+    this.productService.getProductById(productId)
       .subscribe((p: Product) => {
-        this.product = p;
+        console.log('API cevabı:', p); // ← burada imageUrl var mı?
+        const images = Array.isArray(p.images) ? p.images : [];
 
-        // Ürün geldikten sonra yorumları al
-        this.reviewService.getReviewsByProduct(this.product.id).subscribe(data => {
-          this.reviews = data;
-        });
+        const chosenUrl =
+          p.imageUrl
+          ?? images.find((i: any) => i.isThumbnail)?.imageUrl
+          ?? images[0]?.imageUrl
+          ?? null;
+
+        console.log('Seçilen imageUrl:', chosenUrl); // ← gerçekten dolu mu?
+
+        this.product = { ...p, imageUrl: chosenUrl };
+
+        this.reviewService.getReviewsByProduct(this.product.id)
+          .subscribe(data => this.reviews = data);
       });
+
   }
+
+
 
   addProductToWishlist(product: Product, event: MouseEvent): void {
     event.stopPropagation();

@@ -4,5 +4,6 @@ export interface ProductImage {
   imageUrl: string;
   isThumbnail?: boolean;
   sortOrder?: number;
-  product?: { id: number }; 
+  product?: { id: number };
+  image?: number[];
 }

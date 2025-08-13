@@ -9,9 +9,16 @@ export class ProductService {
 
   constructor(private http: HttpClient) {
   }
+  supportsSearch = true; // <-- backend arama destekliyorsa true
 
-  getAll(genderIds?: number[], categoryId?: number | null, active?: boolean): Observable<Product[]> {
+  getAll(
+    genderIds?: number[],
+    categoryId?: number | null,
+    active?: boolean,
+    search?: string // <-- buraya ekledik
+  ): Observable<Product[]> {
     let params = new HttpParams();
+
     if (genderIds && genderIds.length > 0) {
       params = params.append('genderCategoryIds', genderIds.join(','));
     }
@@ -21,8 +28,13 @@ export class ProductService {
     if (active) {
       params = params.append('active', active.toString());
     }
-    return this.http.get<Product[]>(this.baseUrl, {params});
+    if (search) { // <-- search paramı ekleme
+      params = params.append('search', search);
+    }
+
+    return this.http.get<Product[]>(this.baseUrl, { params });
   }
+
 
   getProductById(id: number): Observable<any> {
     return this.http.get(`${this.baseUrl}/${id}`);

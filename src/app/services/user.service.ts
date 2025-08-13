@@ -31,9 +31,11 @@ export class UserService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  assignRoleToUser(userId: number, roleId: number): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/${userId}/roles/${roleId}`, {});
+  // user.service.ts
+  assignRoleToUser(userId: number, role: 'ROLE_USER' | 'ROLE_ADMIN'): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/${userId}/roles/${role}`, {});
   }
+
   updateUserInfo(id: number, user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/${id}`, user);
   }
