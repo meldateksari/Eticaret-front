@@ -39,3 +39,13 @@
   background: #d32f2f;
   color: #fff;
 }
+.product-image{
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px; /* tam daire */
+  object-fit: cover;     /* resmi daire içinde kırpar */
+  display: block;
+  background: #f0f2f5;
+  border: 1px solid #dbe1e6;
+}
+

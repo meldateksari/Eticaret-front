@@ -16,5 +16,10 @@ export class CartItemService {
   getItemsByCart(cartId: number): Observable<CartItem[]> {
     return this.http.get<CartItem[]>(`${this.baseUrl}/cart/${cartId}`);
   }
+  getAllItems(): Observable<CartItem[]> {
+    return this.http.get<CartItem[]>(`${this.baseUrl}/items`);
+  }
+
+
 
 }

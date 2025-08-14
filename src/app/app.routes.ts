@@ -26,7 +26,7 @@ import {ReviewManage} from './adminpages/review-manage/review-manage';
 import {UserService} from './services/user.service';
 import {UserManage} from './adminpages/user-manage/user-manage';
 import {AddProducts} from './adminpages/add-products/add-products';
-import {AddUsers} from './adminpages/add-users/add-users';
+
 import {EditProducts} from './adminpages/edit-products/edit-products';
 import {Faq} from './pages/faq/faq';
 
@@ -64,7 +64,6 @@ export const routes: Routes = [
   { path: 'user-manage', component: UserManage },
   { path: 'add-products', component: AddProducts },
   { path: 'edit-products/:id', component: EditProducts },
-  { path: 'add-users', component: AddUsers},
 
 
 

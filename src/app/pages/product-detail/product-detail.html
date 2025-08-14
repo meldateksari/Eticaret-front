@@ -28,24 +28,23 @@
             </path>
           </svg>
         </button>
+        @for (data of product.images; track data.id) {
+          @if (data.image == null && data.imageUrl != null) {
+            <div
+              class="col-span-2 bg-center bg-no-repeat bg-cover"
+              [style.background-image]="'url(' + data.imageUrl + ')'">
+            </div>
+          } @else {
+            <div
+              class="col-span-2 bg-center bg-no-repeat bg-cover">
+              <img src="data:image/jpeg;base64,{{data.image}}" alt="Image">
+            </div>
+
+          }
 
         <!-- Ürün görselleri -->
-        <div
-          class="col-span-2 bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'">
-        </div>
-        <div
-          class="row-span-2 bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'">
-        </div>
-        <div
-          class="bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'">
-        </div>
-        <div
-          class="bg-center bg-no-repeat bg-cover"
-          [style.background-image]="'url(' + product.imageUrl + ')'">
-        </div>
+        }
+
       </div>
     </div>
 

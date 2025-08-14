@@ -7,9 +7,7 @@
   <main class="flex-1 min-w-0 flex flex-col">
     <div class="flex flex-wrap justify-between gap-3 p-4">
       <p class="text-[#111518] tracking-light text-[32px] font-bold leading-tight min-w-72">Products</p>
-      <a routerLink="/add-products" class="btn-action primary-btn">
-        Add Product
-      </a>
+      <a routerLink="/add-products" class="btn-action primary-btn">Add Product</a>
     </div>
 
     <!-- Search -->
@@ -52,48 +50,55 @@
             <th class="table-col-776 px-4 py-3 text-left text-[#111518] w-60 text-[#60778a] text-sm font-medium leading-normal">Actions</th>
           </tr>
           </thead>
-          <tbody>
-          <tr class="border-t border-t-[#dbe1e6]" *ngFor="let p of filteredProducts()">
+
+          <tbody *ngIf="filteredProducts() as list">
+          <tr class="border-t border-t-[#dbe1e6]" *ngFor="let p of list">
             <td class="table-col-56 h-[72px] px-4 py-2 w-14">
-              <div
-                class="bg-center bg-no-repeat aspect-square bg-cover rounded-full w-10"
-                [style.background-image]="imageFor(p) ? 'url(' + imageFor(p) + ')' : 'url(https://via.placeholder.com/80)'">
-              </div>
+              <img
+                [src]="thumbSrc(p)"
+                (error)="onImgError($event)"
+                [alt]="p.name || 'Product image'"
+                class="product-image"
+              />
             </td>
+
             <td class="table-col-176 px-4 py-2 text-[#111518] text-sm">
               {{ p.name }}
               <div class="text-xs text-[#60778a]" *ngIf="p.brand">{{ p.brand }}</div>
             </td>
+
             <td class="table-col-296 px-4 py-2 text-[#60778a] text-sm">
               {{ p.category?.name || '-' }}
             </td>
+
             <td class="table-col-416 px-4 py-2 text-[#60778a] text-sm">
               {{ p.price | currency:'USD':'symbol':'1.0-2' }}
             </td>
+
             <td class="table-col-536 px-4 py-2 text-[#60778a] text-sm">
               {{ p.stockQuantity ?? 0 }}
             </td>
+
             <td class="table-col-656 px-4 py-2">
               <button
                 class="flex w-full items-center justify-center rounded-lg h-8 px-4 text-sm font-medium"
-                [ngClass]="inStock(p) ? 'bg-[#f0f2f5] text-[#111518]' : 'bg-[#ffe5e5] text-[#a00000]'">
-                {{ inStock(p) ? 'In Stock' : 'Out of Stock' }}
+                [ngClass]="(p.stockQuantity ?? 0) > 0 ? 'bg-[#f0f2f5] text-[#111518]' : 'bg-[#ffe5e5] text-[#a00000]'">
+                {{ (p.stockQuantity ?? 0) > 0 ? 'In Stock' : 'Out of Stock' }}
               </button>
             </td>
+
             <td class="table-col-776 px-4 py-2">
               <div class="action-buttons">
-                <a (click)="gotoEdit(p)" class="btn-action edit-btn" style="cursor:pointer">
-                  Edit
-                </a>
-                <button class="btn-action delete-btn" (click)="onDelete(p)">
-                  Delete
-                </button>
+                <a (click)="gotoEdit(p)" class="btn-action edit-btn" style="cursor:pointer">Edit</a>
+                <button class="btn-action delete-btn" (click)="onDelete(p)">Delete</button>
               </div>
             </td>
           </tr>
 
-          <tr *ngIf="filteredProducts().length === 0">
-            <td colspan="7" class="px-4 py-6 text-center text-[#60778a]">Kriterlere uygun ürün bulunamadı.</td>
+          <tr *ngIf="list.length === 0">
+            <td colspan="7" class="px-4 py-6 text-center text-[#60778a]">
+              Kriterlere uygun ürün bulunamadı.
+            </td>
           </tr>
           </tbody>
         </table>

@@ -3,7 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {ReactiveFormsModule, FormBuilder, Validators, FormGroup, FormsModule} from '@angular/forms';
 import { forkJoin, firstValueFrom } from 'rxjs';
-import { ToastModule } from 'primeng/toast';
+import {Toast, ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 import { ProductService } from '../../services/product.service';
@@ -17,7 +17,7 @@ type ImgItem = { file?: File; previewUrl: string; isUrl?: boolean, base64?: stri
 @Component({
   selector: 'app-add-products',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, ToastModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink, Toast, FormsModule],
   providers: [FormBuilder, ProductService, CategoryService, ProductImageService, MessageService],
   templateUrl: './add-products.html',
   styleUrls: ['./add-products.css']

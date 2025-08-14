@@ -1,0 +1,157 @@
+/* ========================= Dashboard Styles (Daha Sıkı Boşluklar) ========================= */
+
+/* Genel düzen — ana bloklar arası */
+.layout-content-container {
+  gap: 32px; /* önce: 40px (28px'ten artırılmıştı); biraz geri aldık */
+}
+
+/* Her bölümün arasında daha az dikey boşluk */
+.section + .section {
+  margin-top: 28px; /* önce: 40px */
+}
+
+/* Başlık ile içerik arası */
+.section-title {
+  margin: 10px 0 16px 0; /* önce: 10 / 18; altı biraz kısalttık */
+  line-height: 1.2;
+}
+
+/* Üst kartlar ve diğer kutular */
+.card {
+  background: #f7f8fa;
+  border: 1px solid #eef1f4;
+  border-radius: 14px;
+  padding: 20px;          /* önce: 22px */
+  gap: 10px;              /* önce: 10px */
+  box-shadow: 0 1px 1px rgba(16,24,40,0.04), 0 3px 12px rgba(16,24,40,0.08);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;    /* önce: 13px */
+}
+.card .stat-title {
+  margin-bottom: 6px; /* önce: 6px */
+  color: #111518;
+  font-weight: 600;
+}
+.card .stat-value {
+  margin-top: 4px; /* önce: 4px */
+  font-weight: 800;
+}
+
+/* Grafik kartları */
+.chart-card {
+  background: #f9fafb;
+  border: 1px solid #eef1f4;
+  border-radius: 14px;
+  padding: 18px;          /* önce: 20px */
+  box-shadow: 0 1px 1px rgba(16,24,40,0.04), 0 3px 12px rgba(16,24,40,0.08);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;    /* önce: 22px */
+}
+
+/* Grafik kapsayıcı yüksekliği (aynı) */
+.chart-wrap {
+  height: 400px; /* önce: 340px */
+}
+@media (min-width: 768px) {
+  .chart-wrap { height: 440px; } /* önce: 380px */
+}
+@media (min-width: 1024px) {
+  .chart-wrap { height: 480px; } /* önce: 420px */
+}
+
+/* Üst istatistik grid’i — kartlar arası açıklık azaltıldı */
+.top-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px; /* önce: 28px */
+}
+@media (min-width: 640px) {
+  .top-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* önce: 28px */
+  }
+}
+@media (min-width: 1024px) {
+  .top-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px; /* önce: 36px */
+  }
+}
+
+/* Grid kullanmayan yığılmış kartlar — kartlar arası dikey boşluk azalt */
+.card + .card,
+.chart-card + .chart-card {
+  margin-top: 14px; /* önce: 20px */
+}
+
+/* Aynı bölüm içindeki bloklar arası ritim */
+.block-gap > * + * {
+  margin-top: 18px; /* önce: 22px */
+}
+
+/* Sayfa yatay pedleri (aynı) */
+.page-pads {
+  padding-left: 1.5rem;  /* 24px — önce 20px */
+  padding-right: 1.5rem;
+}
+@media (min-width: 1024px) {
+  .page-pads {
+    padding-left: 3rem;  /* 48px — önce 40px */
+    padding-right: 3rem;
+  }
+}
+
+/* Başlık satırı */
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;        /* önce: 20px */
+  margin-bottom: 14px; /* önce: 16px */
+}
+
+/* Alt metinler */
+.subtle {
+  color: #60778a;
+}
+
+/* Skeleton */
+.skel {
+  height: 110px; /* önce: 110px (bıraktık) */
+  background: #f0f2f5;
+  border-radius: 14px;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: .55; }
+  50% { opacity: 1; }
+}
+
+/* ========================= Tailwind gap-4 override (kritik) =========================
+   HTML tarafında sıkça kullandığın: <div class="flex flex-wrap gap-4 ...">
+   bloklarını daha ferah yapıyordu; şimdi daha sıkı. */
+.layout-content-container .flex.flex-wrap.gap-4 {
+  row-gap: 20px !important;     /* önce: 28px */
+  column-gap: 20px !important;  /* önce: 28px */
+  margin-bottom: 14px;          /* önce: 18px */
+}
+@media (min-width: 1024px) {
+  .layout-content-container .flex.flex-wrap.gap-4 {
+    row-gap: 24px !important;     /* önce: 36px */
+    column-gap: 24px !important;  /* önce: 36px */
+    margin-bottom: 16px;          /* önce: 22px */
+  }
+}
+
+/* H2 başlıkların altını biraz aç (hafif) */
+.layout-content-container h2 {
+  margin-top: 4px;
+  margin-bottom: 12px; /* önce: 14px */
+}
+
+/* Bölüm sonlarında aşağıya nefes (hafif) */
+.layout-content-container section {
+  margin-bottom: 8px; /* önce: 10px */
+}

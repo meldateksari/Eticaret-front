@@ -107,4 +107,28 @@ export class ProductManage implements OnInit {
     const first = (p as any)?.images?.[0]?.imageUrl;
     return first ?? null;
   }
+  // Placeholder görseli tek yerde tutalım:
+  private readonly PLACEHOLDER = 'https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image';
+
+  thumbSrc(p: any): string {
+    const images = p?.images as Array<any> | undefined;
+    if (images && images.length) {
+      // Thumbnail işaretli olanı al
+      const tn = images.find(i => i?.isThumbnail);
+      const img = tn ?? images[0];
+      if (img?.image) {
+        return `data:image/jpeg;base64,${img.image}`;
+      }
+      if (img?.imageUrl && /^https?:\/\//i.test(img.imageUrl)) {
+        return img.imageUrl;
+      }
+    }
+    return this.PLACEHOLDER;
+  }
+
+  onImgError(ev: Event) {
+    const el = ev.target as HTMLImageElement;
+    el.src = this.PLACEHOLDER;
+  }
+
 }

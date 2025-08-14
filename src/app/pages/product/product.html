@@ -82,12 +82,35 @@
       <!-- Ürün Detayına Gitme Alanı -->
       <div class="product-click-area" [routerLink]="['/product', product.id]">
         <div class="product-image-container">
-          <img
-            [src]="product.imageUrl || 'https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image'"
-            (error)="$event.target.src='https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image'"
-            [alt]="product.name"
-            class="product-image"
-          />
+          @if (product.images != null && product.images.length > 0){
+            @for (data of product.images; track data.id) {
+              @if (data.isThumbnail) {
+                @if (data.image != null) {
+                  <img
+                    src="data:image/jpeg;base64, {{data.image}}"
+                    (error)="$event.target.src='https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image'"
+                    [alt]="product.name"
+                    class="product-image"
+                  />
+                } @else if (data.imageUrl != null && data.imageUrl.startsWith('http')){
+                  <img
+                    [src]="product.imageUrl"
+                    (error)="$event.target.src='https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image'"
+                    [alt]="product.name"
+                    class="product-image"
+                  />
+                }
+              }
+            }
+          } @else {
+            <img
+              [src]="'https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image'"
+              (error)="$event.target.src='https://dummyimage.com/400x400/f5f5f5/999999.png&text=No+Image'"
+              [alt]="product.name"
+              class="product-image"
+            />
+          }
+
         </div>
         <div class="product-info">
           <h3 class="product-name">{{ product.name }}</h3>
